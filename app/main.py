@@ -1,10 +1,14 @@
 import os
 import sys
 sys.path.insert(0, './distlib.zip')
+sys.path.insert(0, './lib')
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
+
+from blockdiag.blockdiag import *
+from blockdiag.diagparser import *
 
 
 class MainPage(webapp.RequestHandler):
@@ -13,11 +17,24 @@ class MainPage(webapp.RequestHandler):
         params = {}
         html = template.render(fpath, params)
 
-        self.response.headers['Content-Type'] = 'text/html'
+        self.response.headers['Content-Type'] = 'application/xhtml+xml'
         self.response.out.write(html)
 
 
-application = webapp.WSGIApplication([('/', MainPage)], debug=True)
+class ImagePage(webapp.RequestHandler):
+    def post(self):
+        tree = parse(tokenize(self.request.get('src')))
+        diagram = ScreenNodeBuilder.build(tree)
+        draw = DiagramDraw.DiagramDraw('SVG', diagram)
+        draw.draw()
+        svg = draw.save('')
+
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write(svg)
+
+
+application = webapp.WSGIApplication([('/', MainPage),
+                                      ('/image', ImagePage)], debug=True)
 
 
 def main():
