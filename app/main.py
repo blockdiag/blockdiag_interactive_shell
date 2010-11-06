@@ -23,11 +23,14 @@ class MainPage(webapp.RequestHandler):
 
 class ImagePage(webapp.RequestHandler):
     def post(self):
-        tree = parse(tokenize(self.request.get('src')))
-        diagram = ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw('SVG', diagram)
-        draw.draw()
-        svg = draw.save('')
+        try:
+            tree = parse(tokenize(self.request.get('src')))
+            diagram = ScreenNodeBuilder.build(tree)
+            draw = DiagramDraw.DiagramDraw('SVG', diagram)
+            draw.draw()
+            svg = draw.save('')
+        except:
+            svg = ''
 
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.out.write(svg)
