@@ -1,23 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>blockdiag: testing form</title>
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript">
-    <!--
-      function loadImage() {
-          url = encodeURI($("#source").val())
-          $("#image_area").html(url + '<image src="/image?src=' + url + '" />');
-      }
-      -->
-    </script>
+    <script type="text/javascript" src="/js/blockdiag.js"></script>
+    <title>blockdiag: testing form</title>
   </head>
   <body>
-    <div id="image_area" style="height: 500px"></div>
-    Diagram source:<br />
-    <textarea id="source" cols="80" rows="10"></textarea><br />
-    <input type="button" value="Update" onclick="loadImage();" />
+    <h1><a href="http://tk0miya.bitbucket.org/blockdiag/build/html/index.html">blockdiag</a> interactive shell (for non IE browers)</h1>
+    Source:<br />
+    <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{
+  A -> B -> C;
+       B -> D;
+}</textarea><br />
+    Diagram:<br />
+    <div id="diagram_image"></div>
   </body>
 </html>
