@@ -7,16 +7,17 @@
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script type="text/javascript" src="/js/blockdiag.js"></script>
-    <title>blockdiag: testing form</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <title>blockdiag: interactive shell</title>
   </head>
   <body>
     <h1><a href="http://tk0miya.bitbucket.org/blockdiag/build/html/index.html">blockdiag</a> interactive shell (for non IE browers)</h1>
-    Source:<br />
+    <h2>Source:</h2>
     <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{
   A -> B -> C;
        B -> D;
 }</textarea><br />
-    Diagram:<br />
+    <h2>Diagram:</h2>
     <div id="diagram_image"></div>
   </body>
 </html>
