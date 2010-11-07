@@ -14,7 +14,10 @@ function update_diagram() {
       html = html.replace(/<!DOCTYPE.*>\n/, '')
 
       $('#diagram_image').html(html);
-      $('#diagram_image svg').removeAttr('viewBox');
+      if (!$.support.checkOn) {
+        // for Chrome and Safari
+        $('#diagram_image svg').removeAttr('viewBox');
+      }
     }
   });
 }
