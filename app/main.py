@@ -1,5 +1,6 @@
 import os
 import sys
+from django.utils import simplejson
 sys.path.insert(0, './distlib.zip')
 sys.path.insert(0, './lib')
 
@@ -22,9 +23,30 @@ class MainPage(webapp.RequestHandler):
 
 
 class ImagePage(webapp.RequestHandler):
+    def get(self):
+        callback = self.request.get('callback')
+        source = self.request.get('src')
+
+        svg = self.generate_image(source)
+        if callback and svg:
+            json = simplejson.dumps({'image': svg}, ensure_ascii=False)
+            jsonp = '%s(%s)' % (callback, json)
+        else:
+            jsonp = ''
+
+        self.response.headers['Content-Type'] = 'text/javascript'
+        self.response.out.write(jsonp)
+
     def post(self):
+        source = self.request.get('src')
+        svg = self.generate_image(source)
+
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write(svg)
+
+    def generate_image(self, source):
         try:
-            tree = parse(tokenize(self.request.get('src')))
+            tree = parse(tokenize(source))
             diagram = ScreenNodeBuilder.build(tree)
             draw = DiagramDraw.DiagramDraw('SVG', diagram)
             draw.draw()
@@ -32,8 +54,7 @@ class ImagePage(webapp.RequestHandler):
         except:
             svg = ''
 
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.out.write(svg)
+        return svg
 
 
 application = webapp.WSGIApplication([('/', MainPage),
