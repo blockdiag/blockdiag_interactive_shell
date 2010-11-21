@@ -9,7 +9,7 @@ function update_diagram() {
   url = 'http://blockdiag.appspot.com/image';
   params = {'src': diagram};
   $.post(url, params, function(data, status){
-    if (status == 'success' && data != "\n") {
+    if (status == 'success' && data != "") {
       html = data.replace(/<\?xml.*>\n/, '')
       html = html.replace(/<!DOCTYPE.*>\n/, '')
 
