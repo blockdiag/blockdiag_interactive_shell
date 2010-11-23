@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/base64.js"></script>
     <script type="text/javascript" src="/js/blockdiag.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <title>Interactive shell for blockdiag</title>
@@ -13,10 +14,11 @@
   <body>
     <h1>Interactive shell for <a href="http://tk0miya.bitbucket.org/blockdiag/build/html/index.html">blockdiag</a> (for non IE browers)</h1>
     <h2>Source:</h2>
-    <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{
+    <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{% if diagram %}{{diagram}}{% else %}{
   A -> B -> C;
        B -> D;
-}</textarea><br />
+}{% endif %}</textarea><br />
+    Share your diagram: <span id="shorten_url"><a href="#">Shorten URL is here</a></span>.
     <h2>Diagram:</h2>
     <div id="diagram_image"></div>
   </body>

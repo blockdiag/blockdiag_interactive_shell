@@ -1,5 +1,6 @@
 import os
 import sys
+import base64
 from django.utils import simplejson
 sys.path.insert(0, './distlib.zip')
 sys.path.insert(0, './lib')
@@ -16,6 +17,11 @@ class MainPage(webapp.RequestHandler):
     def get(self):
         fpath = os.path.join(os.path.dirname(__file__), 'templates', 'index.html')
         params = {}
+
+        source = self.request.get('src')
+        if source:
+            params['diagram'] = base64.b64decode(source)
+
         html = template.render(fpath, params)
 
         self.response.headers['Content-Type'] = 'application/xhtml+xml'
