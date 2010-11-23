@@ -36,7 +36,7 @@ class ImagePage(webapp.RequestHandler):
         svg = self.generate_image(source)
         if callback and svg:
             json = simplejson.dumps({'image': svg}, ensure_ascii=False)
-            jsonp = '%s(%s)' % (callback, json)
+            jsonp = u'%s(%s)' % (callback, json)
         else:
             jsonp = ''
 
@@ -60,7 +60,7 @@ class ImagePage(webapp.RequestHandler):
         except:
             svg = ''
 
-        return svg
+        return svg.decode('utf-8')
 
 
 application = webapp.WSGIApplication([('/', MainPage),
