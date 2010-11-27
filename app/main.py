@@ -1,6 +1,8 @@
 import os
 import sys
+import re
 import base64
+import logging
 from django.utils import simplejson
 sys.path.insert(0, './distlib.zip')
 sys.path.insert(0, './lib')
@@ -19,7 +21,13 @@ class MainPage(webapp.RequestHandler):
         params = {}
 
         source = self.request.get('src')
+        source = re.sub('-', '+', source)
+        source = re.sub('_', '/', source)
         if source:
+            padding = len(source) % 4
+            if padding > 0:
+                 source += "=" * (4 - padding)
+
             params['diagram'] = base64.b64decode(source)
 
         html = template.render(fpath, params)

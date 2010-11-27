@@ -114,7 +114,7 @@ if (!this['Base64']) Base64 = {
     encodeURI:function(u){
         return btoa(utob(u)).replace(/[+\/]/g, function(m0){
             return m0 == '+' ? '-' : '_';
-        });
+        }).replace(/=+$/, '');
     },
     decode:function(a){ 
         return btou(atob(a.replace(/[-_]/g, function(m0){
