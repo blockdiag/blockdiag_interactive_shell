@@ -24,7 +24,7 @@ def base64_decode(string):
     if padding > 0:
         string += "=" * (4 - padding)
 
-    return base64.b64decode(string)
+    return unicode(base64.b64decode(string), 'UTF-8')
 
 
 class MainPage(webapp.RequestHandler):
@@ -47,16 +47,24 @@ class ImagePage(webapp.RequestHandler):
     def get(self):
         callback = self.request.get('callback')
         source = self.request.get('src')
+        encoding = self.request.get('encoding', 'jsonp')
+
+        if encoding == 'base64':
+            source = base64_decode(source)
 
         svg = self.generate_image(source)
-        if callback and svg:
-            json = simplejson.dumps({'image': svg}, ensure_ascii=False)
-            jsonp = u'%s(%s)' % (callback, json)
-        else:
-            jsonp = ''
+        if encoding == 'jsonp':
+            if callback and svg:
+                json = simplejson.dumps({'image': svg}, ensure_ascii=False)
+                jsonp = u'%s(%s)' % (callback, json)
+            else:
+                jsonp = ''
 
-        self.response.headers['Content-Type'] = 'text/javascript'
-        self.response.out.write(jsonp)
+            self.response.headers['Content-Type'] = 'text/javascript'
+            self.response.out.write(jsonp)
+        elif encoding == 'base64':
+            self.response.headers['Content-Type'] = 'image/svg+xml'
+            self.response.out.write(svg)
 
     def post(self):
         source = self.request.get('src')
@@ -72,7 +80,8 @@ class ImagePage(webapp.RequestHandler):
             draw = DiagramDraw.DiagramDraw('SVG', diagram)
             draw.draw()
             svg = draw.save('')
-        except:
+        except Exception, e:
+            self.errors = e
             svg = ''
 
         return svg.decode('utf-8')
