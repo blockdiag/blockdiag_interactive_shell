@@ -14,6 +14,15 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from blockdiag.blockdiag import *
 from blockdiag.diagparser import *
 
+def base64_decode(string):
+    string = re.sub('-', '+', string)
+    string = re.sub('_', '/', string)
+
+    padding = len(string) % 4
+    if padding > 0:
+         string += "=" * (4 - padding)
+
+    return base64.b64decode(string)
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -21,14 +30,8 @@ class MainPage(webapp.RequestHandler):
         params = {}
 
         source = self.request.get('src')
-        source = re.sub('-', '+', source)
-        source = re.sub('_', '/', source)
         if source:
-            padding = len(source) % 4
-            if padding > 0:
-                 source += "=" * (4 - padding)
-
-            params['diagram'] = base64.b64decode(source)
+            params['diagram'] = base64_decode(source)
 
         html = template.render(fpath, params)
 
