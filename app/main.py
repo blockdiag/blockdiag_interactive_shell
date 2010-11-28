@@ -14,6 +14,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from blockdiag.blockdiag import *
 from blockdiag.diagparser import *
 
+# for supporting base64.js
 def base64_decode(string):
     string = re.sub('-', '+', string)
     string = re.sub('_', '/', string)
