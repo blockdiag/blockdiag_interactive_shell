@@ -14,6 +14,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from blockdiag.blockdiag import *
 from blockdiag.diagparser import *
 
+
 # for supporting base64.js
 def base64_decode(string):
     string = re.sub('-', '+', string)
@@ -21,13 +22,15 @@ def base64_decode(string):
 
     padding = len(string) % 4
     if padding > 0:
-         string += "=" * (4 - padding)
+        string += "=" * (4 - padding)
 
     return base64.b64decode(string)
 
+
 class MainPage(webapp.RequestHandler):
     def get(self):
-        fpath = os.path.join(os.path.dirname(__file__), 'templates', 'index.html')
+        dirname = os.path.dirname(__file__)
+        fpath = os.path.join(dirname, 'templates', 'index.html')
         params = {}
 
         source = self.request.get('src')
