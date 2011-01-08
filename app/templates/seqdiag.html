@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/base64.js"></script>
+    <script type="text/javascript" src="/js/blockdiag.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <title>Interactive shell for seqdiag</title>
+  </head>
+  <body>
+    <h1>Interactive shell for <a href="http://pypi.python.org/pypi/seqdiag/">seqdiag</a> (for non IE browers)</h1>
+    <h2>Source:</h2>
+    <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{% if diagram %}{{ diagram|escape }}{% else %}{
+  A -> B [label = "generate"];
+  A -> C [label = "run()"];
+  A -> D [label = "exit()"];
+}{% endif %}</textarea><br />
+    Share your diagram: <span id="shorten_url"><a href="#">Shorten URL is here</a></span>.
+    <h2>Diagram:</h2>
+    <div id="diagram_image"></div>
+  </body>
+</html>
