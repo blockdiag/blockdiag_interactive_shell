@@ -75,6 +75,9 @@ class ImagePage(webapp.RequestHandler):
 
     def generate_image(self, source):
         try:
+            DiagramNode.clear()
+            DiagramEdge.clear()
+
             tree = parse(tokenize(source))
             diagram = ScreenNodeBuilder.build(tree)
             draw = DiagramDraw.DiagramDraw('SVG', diagram)
