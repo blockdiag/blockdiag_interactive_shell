@@ -7,10 +7,10 @@ function update_diagram() {
   __last = diagram;
 
   encoded_diagram = Base64.encodeURI(diagram)
-  url = 'http://blockdiag.appspot.com/?src=' + encoded_diagram
+  url = './?src=' + encoded_diagram
   $('#shorten_url a').attr('href', url)
 
-  url = 'http://blockdiag.appspot.com/image';
+  url = './image';
   params = {'src': diagram};
   $.post(url, params, function(data, status){
     if (status == 'success' && data != "") {
