@@ -96,7 +96,7 @@ class ImagePage(webapp.RequestHandler):
 class SeqdiagMainPage(webapp.RequestHandler):
     def get(self):
         dirname = os.path.dirname(__file__)
-        fpath = os.path.join(dirname, 'templates', 'index.html')
+        fpath = os.path.join(dirname, 'templates', 'seqdiag.html')
         params = {}
 
         source = self.request.get('src')
