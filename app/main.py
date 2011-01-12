@@ -12,10 +12,8 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 from blockdiag.elements import *
-from blockdiag import blockdiag, DiagramDraw
-from blockdiag.diagparser import *
-
-from seqdiag import seqdiag
+import blockdiag
+import seqdiag
 
 
 # for supporting base64.js
@@ -81,8 +79,8 @@ class ImagePage(webapp.RequestHandler):
             DiagramNode.clear()
             DiagramEdge.clear()
 
-            tree = parse(tokenize(source))
-            diagram = blockdiag.ScreenNodeBuilder.build(tree)
+            tree = blockdiag.diagparser.parse(blockdiag.diagparser.tokenize(source))
+            diagram = blockdiag.blockdiag.ScreenNodeBuilder.build(tree)
             draw = blockdiag.DiagramDraw.DiagramDraw('SVG', diagram)
             draw.draw()
             svg = draw.save('')
@@ -144,9 +142,9 @@ class SeqdiagImagePage(webapp.RequestHandler):
             DiagramNode.clear()
             DiagramEdge.clear()
 
-            tree = parse(tokenize(source))
-            diagram = seqdiag.DiagramTreeBuilder().build(tree)
-            draw = seqdiag.DiagramDraw('SVG', diagram)
+            tree = seqdiag.diagparser.parse(seqdiag.diagparser.tokenize(source))
+            diagram = seqdiag.seqdiag.DiagramTreeBuilder().build(tree)
+            draw = seqdiag.seqdiag.DiagramDraw('SVG', diagram)
             draw.draw()
             svg = draw.save('')
         except Exception, e:
