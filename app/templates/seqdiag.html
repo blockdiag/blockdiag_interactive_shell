@@ -12,12 +12,24 @@
     <title>Interactive shell for seqdiag</title>
   </head>
   <body>
-    <h1>Interactive shell for <a href="http://pypi.python.org/pypi/seqdiag/">seqdiag</a> (for non IE browers)</h1>
+    <h1>Interactive shell for <a href="http://tk0miya.bitbucket.org/seqdiag/build/html/index.html">seqdiag</a> (for non IE browers)</h1>
     <h2>Source:</h2>
     <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{% if diagram %}{{ diagram|escape }}{% else %}{
-  A -> B [label = "generate"];
-  A -> C [label = "run()"];
-  A -> D [label = "exit()"];
+  // simple notation
+  browser  -> webserver [label = "GET /index.html"];
+  browser &lt;-- webserver;
+
+  browser  -> webserver [label = "POST /blog/comment"];
+              webserver  -> database [label = "INSERT comment"];
+              webserver &lt;-- database;
+  browser &lt;-- webserver;
+
+  // auto return notation
+  browser => webserver [label = "GET /index.html"];
+
+  browser => webserver [label = "POST /blog/comment"] {
+    webserver => database [label = "INSERT comment"];
+  }
 }{% endif %}</textarea><br />
     Share your diagram: <span id="shorten_url"><a href="#">Shorten URL is here</a></span>.
     <h2>Diagram:</h2>
