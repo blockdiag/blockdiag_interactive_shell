@@ -28,6 +28,19 @@ def base64_decode(string):
     return unicode(base64.b64decode(string), 'UTF-8')
 
 
+def setup_noderenderers():
+    modules = ('box', 'roundedbox', 'diamond', 'minidiamond', 'mail',
+               'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
+               'actor', 'flowchart.database', 'flowchart.input',
+               'flowchart.loopin', 'flowchart.loopout', 'flowchart.terminator')
+    for name in modules:
+        name = 'blockdiag.noderenderer.' + name
+        __import__(name, fromlist=blockdiag.noderenderer)
+        m = sys.modules[name]
+
+        m.setup(m)
+
+
 class MainPage(webapp.RequestHandler):
     def get(self):
         dirname = os.path.dirname(__file__)
@@ -161,6 +174,7 @@ application = webapp.WSGIApplication([('/', MainPage),
 
 
 def main():
+    setup_noderenderers()
     run_wsgi_app(application)
 
 
