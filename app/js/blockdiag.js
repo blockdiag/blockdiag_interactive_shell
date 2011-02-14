@@ -14,13 +14,35 @@ function update_diagram() {
   params = {'src': diagram};
   $.post(url, params, function(data, status){
     if (status == 'success' && data != "") {
-      html = data.replace(/<\?xml.*>\n/, '')
-      html = html.replace(/<!DOCTYPE.*>\n/, '')
+      if(jQuery.support.checkOn && jQuery.support.noCloneEvent && !window.globalStorage){
+        // for Opera
+        re = RegExp('viewBox="\\d+\\s+\\d+\\s+(\\d+)\\s+(\\d+)\\s*"');
+        m = re(data)
+        if (m) {
+          width = m[1]
+          height = m[2]
+        } else {
+          width = 400
+          height = 400
+        }
 
-      $('#diagram_image').html(html);
-      if (!$.support.checkOn) {
-        // for Chrome and Safari
-        $('#diagram_image svg').removeAttr('viewBox');
+        encoded_diagram = Base64.encodeURI(diagram)
+        url = './image?encoding=base64&src=' + encoded_diagram
+        var obj = $(document.createElement('object'))
+        obj.attr('type', 'image/svg+xml')
+        obj.attr('data', url)
+        obj.attr('width', width)
+        obj.attr('height', height)
+        $('#diagram_image').html(obj);
+      } else {
+        html = data.replace(/<\?xml.*>\n/, '')
+        html = html.replace(/<!DOCTYPE.*>\n/, '')
+
+        $('#diagram_image').html(html);
+        if (!$.support.checkOn) {
+          // for Chrome and Safari
+          $('#diagram_image svg').removeAttr('viewBox');
+        }
       }
     }
   });
