@@ -13,6 +13,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 from blockdiag.elements import *
 import blockdiag
+import blockdiagcontrib
 import seqdiag
 
 
@@ -36,6 +37,14 @@ def setup_noderenderers():
     for name in modules:
         name = 'blockdiag.noderenderer.' + name
         __import__(name, fromlist=blockdiag.noderenderer)
+        m = sys.modules[name]
+
+        m.setup(m)
+
+    modules = ('square',)
+    for name in modules:
+        name = 'blockdiagcontrib.' + name
+        __import__(name, fromlist=blockdiagcontrib)
         m = sys.modules[name]
 
         m.setup(m)
