@@ -1,6 +1,7 @@
 import os
 import sys
 import re
+import png
 import base64
 import logging
 from django.utils import simplejson
@@ -176,10 +177,65 @@ class SeqdiagImagePage(webapp.RequestHandler):
         return svg.decode('utf-8')
 
 
+class ImageUploadMainPage(webapp.RequestHandler):
+    def get(self):
+        dirname = os.path.dirname(__file__)
+        fpath = os.path.join(dirname, 'templates', 'upload.html')
+        html = template.render(fpath, {})
+
+        self.response.headers['Content-Type'] = 'application/xhtml+xml'
+        self.response.out.write(html)
+
+    def post(self):
+        from StringIO import StringIO
+        from itertools import izip
+
+        io = StringIO(self.request.get('img'))
+        pict = png.Reader(file=io)
+        x, y, pixels, meta = pict.asRGB8()
+
+        diagram = """diagram{
+           node_width=20;
+           node_height=20;
+           span_width=1;
+           span_height=1; 
+        """
+
+        for i, line in enumerate(pixels):
+            if i > 32:
+                continue
+
+            it = iter(line)
+            nodes = []
+            for j, pixel in enumerate(izip(it, it, it)):
+                if j > 32:
+                    continue
+
+                node = "x%dy%d" % (i, j)
+                nodes.append(node)
+
+                diagram += '  %s[label="",color="#%02x%02x%02x"];\n' % \
+                           (node, pixel[0], pixel[1], pixel[2])
+
+            diagram += "  " + " -- ".join(nodes) + "\n"
+
+        diagram += "}\n"
+
+
+        dirname = os.path.dirname(__file__)
+        fpath = os.path.join(dirname, 'templates', 'upload2.html')
+        html = template.render(fpath, {'diagram': diagram})
+
+        self.response.headers['Content-Type'] = 'application/xhtml+xml'
+        self.response.out.write(html)
+
+
 application = webapp.WSGIApplication([('/', MainPage),
                                       ('/image', ImagePage),
                                       ('/seqdiag/', SeqdiagMainPage),
-                                      ('/seqdiag/image', SeqdiagImagePage)], debug=True)
+                                      ('/seqdiag/image', SeqdiagImagePage),
+                                      ('/upload', ImageUploadMainPage)],
+                                     debug=True)
 
 
 def main():
