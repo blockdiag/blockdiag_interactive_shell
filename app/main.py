@@ -1,7 +1,6 @@
 import os
 import sys
 import re
-import png
 import base64
 import logging
 from django.utils import simplejson
@@ -187,6 +186,7 @@ class ImageUploadMainPage(webapp.RequestHandler):
         self.response.out.write(html)
 
     def post(self):
+        import png
         from StringIO import StringIO
         from itertools import izip
 
