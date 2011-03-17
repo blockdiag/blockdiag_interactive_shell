@@ -179,17 +179,20 @@ def blockdiag_upload_form():
             if i > 32:
                 continue
 
-            it = iter(line)
             nodes = []
-            for j, pixel in enumerate(izip(it, it, it)):
+            colors = (line[i:i + 3] for i in range(0, len(line), 3))
+            for j, pixel in enumerate(colors):
                 if j > 32:
                     continue
 
-                node = "x%dy%d" % (i, j)
+                node = "%02d%02d" % (i, j)
                 nodes.append(node)
 
-                diagram += '  %s[label="",color="#%02x%02x%02x"];\n' % \
-                           (node, pixel[0], pixel[1], pixel[2])
+                if pixel == [255, 255, 255]:
+                    diagram += '  %s [label=""];\n' % node
+                else:
+                    diagram += '  %s [label="",color="#%02x%02x%02x"];\n' % \
+                               (node, pixel[0], pixel[1], pixel[2])
 
             diagram += "  " + " -- ".join(nodes) + "\n"
 
