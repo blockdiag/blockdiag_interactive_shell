@@ -74,13 +74,14 @@ def blockdiag_image():
 
 def blockdiag_generate_image(source):
     import blockdiag
+    from blockdiag import diagparser
     from blockdiag.elements import DiagramNode, DiagramEdge
 
     try:
         DiagramNode.clear()
         DiagramEdge.clear()
 
-        tree = blockdiag.diagparser.parse(blockdiag.diagparser.tokenize(source))
+        tree = diagparser.parse(diagparser.tokenize(source))
         diagram = blockdiag.blockdiag.ScreenNodeBuilder.build(tree)
         draw = blockdiag.DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
@@ -172,7 +173,7 @@ def blockdiag_upload_form():
            node_width=20;
            node_height=20;
            span_width=1;
-           span_height=1; 
+           span_height=1;
         """
 
         for i, line in enumerate(pixels):
@@ -197,7 +198,6 @@ def blockdiag_upload_form():
             diagram += "  " + " -- ".join(nodes) + "\n"
 
         diagram += "}\n"
-
 
         body = render_template('upload2.html', diagram=diagram)
         response = app.make_response(body)
