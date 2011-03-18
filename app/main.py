@@ -2,12 +2,13 @@
 import os
 import sys
 
-from utils import setup_noderenderers
-from utils import base64_decode
 import logging
 from django.utils import simplejson
 sys.path.insert(0, './distlib.zip')
 sys.path.insert(0, './lib')
+
+from utils import setup_noderenderers
+from utils import base64_decode
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
