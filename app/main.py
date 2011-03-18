@@ -167,7 +167,7 @@ def blockdiag_upload_form():
         from itertools import izip
 
         pict = png.Reader(file=request.files['img'])
-        x, y, pixels, meta = pict.asRGB8()
+        x, y, pixels, meta = pict.asRGBA8()
 
         diagram = """diagram{
            node_width=20;
@@ -181,7 +181,7 @@ def blockdiag_upload_form():
                 continue
 
             nodes = []
-            colors = (line[i:i + 3] for i in range(0, len(line), 3))
+            colors = (line[i:i + 4] for i in range(0, len(line), 4))
             for j, pixel in enumerate(colors):
                 if j > 32:
                     continue
@@ -189,11 +189,22 @@ def blockdiag_upload_form():
                 node = "%02d%02d" % (i, j)
                 nodes.append(node)
 
-                if pixel == [255, 255, 255]:
+                if pixel[3] == 0:
+                    rgb = [255, 255, 255]
+                elif pixel[3] == 255:
+                    rgb = pixel[0:3]
+                else:
+                    alpha = pixel[3] / 256.0
+                    bgcolor = 255 * (1 - alpha)
+                    rgb = [int(bgcolor + pixel[0] * alpha),
+                           int(bgcolor + pixel[1] * alpha),
+                           int(bgcolor + pixel[2] * alpha)]
+
+                if rgb == [255, 255, 255]:
                     diagram += '  %s [label=""];\n' % node
                 else:
                     diagram += '  %s [label="",color="#%02x%02x%02x"];\n' % \
-                               (node, pixel[0], pixel[1], pixel[2])
+                               (node, rgb[0], rgb[1], rgb[2])
 
             diagram += "  " + " -- ".join(nodes) + "\n"
 
