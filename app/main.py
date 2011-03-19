@@ -176,12 +176,28 @@ def blockdiag_upload_form():
         return render_template('upload.html')
     else:
         pict = models.Picture.get(pict_id)
+        if pict is None:
+            return redirect('/upload')
+
         diagram = pict.diagram
 
         body = render_template('upload2.html', diagram=diagram)
         response = app.make_response(body)
         response.headers['Content-Type'] = 'application/xhtml+xml'
         return response
+
+
+@app.route('/tasks/delete_uploads')
+def tasks_delete_uploads():
+    import models
+    from datetime import date, timedelta
+    expire_date = date.today() - timedelta(7)
+
+    query = models.Picture.all().filter('created_at <=', expire_date)
+    for pict in query.fetch(1000):
+         pict.delete()
+
+    return ""
 
 
 def blockdiag_generate_image_from_uploads(file):
