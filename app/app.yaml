@@ -12,5 +12,9 @@ handlers:
 - url: /css
   static_dir: css
 
+- url: /tasks/.*
+  script: main.py
+  login: admin
+
 - url: .*
   script: main.py
