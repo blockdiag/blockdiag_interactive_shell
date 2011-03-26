@@ -76,11 +76,12 @@ def blockdiag_image():
 def blockdiag_generate_image(source):
     import blockdiag
     from blockdiag import diagparser
-    from blockdiag.elements import DiagramNode, DiagramEdge
+    from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
         DiagramNode.clear()
         DiagramEdge.clear()
+        NodeGroup.clear()
 
         tree = diagparser.parse(diagparser.tokenize(source))
         diagram = blockdiag.blockdiag.ScreenNodeBuilder.build(tree)
@@ -141,11 +142,12 @@ def seqdiag_image():
 
 def seqdiag_generate_image(source):
     import seqdiag
-    from blockdiag.elements import DiagramNode, DiagramEdge
+    from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
         DiagramNode.clear()
         DiagramEdge.clear()
+        NodeGroup.clear()
 
         tree = seqdiag.diagparser.parse(seqdiag.diagparser.tokenize(source))
         diagram = seqdiag.seqdiag.DiagramTreeBuilder().build(tree)
