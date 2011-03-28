@@ -20,6 +20,9 @@ app.register_module(apps.blockdiag_main.app)
 import apps.seqdiag_main
 app.register_module(apps.seqdiag_main.app, url_prefix='/seqdiag')
 
+import apps.actdiag_main
+app.register_module(apps.actdiag_main.app, url_prefix='/actdiag')
+
 
 @app.route('/tasks/delete_uploads')
 def tasks_delete_uploads():
