@@ -14,18 +14,17 @@ function update_diagram() {
   params = {'src': diagram};
   $.post(url, params, function(data, status){
     if (status == 'success' && data != "") {
-      if(jQuery.support.checkOn && jQuery.support.noCloneEvent && !window.globalStorage){
-        // for Opera
-        re = RegExp('viewBox="\\d+\\s+\\d+\\s+(\\d+)\\s+(\\d+)\\s*"');
-        m = re(data)
-        if (m) {
-          width = m[1]
-          height = m[2]
-        } else {
-          width = 400
-          height = 400
-        }
+      re = RegExp('viewBox="\\d+\\s+\\d+\\s+(\\d+)\\s+(\\d+)\\s*"');
+      m = re(data)
+      if (m) {
+        width = m[1]
+        height = m[2]
+      } else {
+        width = 400
+        height = 400
+      }
 
+      if(jQuery.support.checkOn && jQuery.support.noCloneEvent && !window.globalStorage){
         encoded_diagram = Base64.encodeURI(diagram)
         url = './image?encoding=base64&src=' + encoded_diagram
         var obj = $(document.createElement('object'))
@@ -42,6 +41,8 @@ function update_diagram() {
         if (!$.support.checkOn) {
           // for Chrome and Safari
           $('#diagram_image svg').removeAttr('viewBox');
+          $('#diagram_image svg').attr('width', width);
+          $('#diagram_image svg').attr('height', height);
         }
       }
     }
