@@ -17,10 +17,10 @@
     <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{% if diagram %}{{ diagram|escape }}{% else %}{
   A -> B -> C -> D -> E;
 
-  group {
+  lane {
     A; C; E;
   }
-  group {
+  lane {
     B; D;
   }
 }{% endif %}</textarea><br />

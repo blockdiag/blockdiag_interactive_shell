@@ -54,7 +54,7 @@ def actdiag_image():
 
 def actdiag_generate_image(source):
     import actdiag
-    from blockdiag import diagparser
+    from actdiag import diagparser
     from actdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
