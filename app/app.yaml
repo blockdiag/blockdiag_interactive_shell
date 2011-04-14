@@ -1,0 +1,20 @@
+application: blockdiag
+version: 1
+runtime: python
+api_version: 1
+handlers:
+- url: /favicon.ico
+  static_dir: image
+
+- url: /js
+  static_dir: js
+
+- url: /css
+  static_dir: css
+
+- url: /tasks/.*
+  script: main.py
+  login: admin
+
+- url: .*
+  script: main.py

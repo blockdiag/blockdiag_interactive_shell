@@ -1,0 +1,36 @@
+hr.colored {
+    border-style:       solid;
+    border-color:       #3333cc;
+    margin-top:         0.5em;
+}
+
+body {
+    color:		#000000;
+    background:		#eeeeee;
+    margin-left:	2%;
+    margin-right:	2%;
+    font-size:		12pt;
+    font-family:	verdana, arial, helvetica, Sans-Serif;
+}
+
+h1 {
+    font-family:	"comic sans ms", verdana, sans-serif; 
+    text-align:		left;
+    font-size:		18pt;
+    margin-right:	10%;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family:	verdana, arial, helvetica, Sans-Serif;
+}
+
+h2 {
+    padding-top:	0.1em;
+    text-indent:	0.5em;
+    color:		#223322;
+    border-style:	solid;
+    border-color:	#3333cc;
+    border-width:	0 0 thin thick;
+    margin-left:	0.0em;
+    margin-bottom:	0.2em;
+}
