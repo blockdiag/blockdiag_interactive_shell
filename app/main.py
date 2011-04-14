@@ -26,6 +26,9 @@ app.register_module(apps.actdiag_main.app, url_prefix='/actdiag')
 import apps.netdiag_main
 app.register_module(apps.netdiag_main.app, url_prefix='/netdiag')
 
+import apps.graphviz_main
+app.register_module(apps.graphviz_main.app, url_prefix='/graphviz')
+
 
 @app.route('/tasks/delete_uploads')
 def tasks_delete_uploads():
