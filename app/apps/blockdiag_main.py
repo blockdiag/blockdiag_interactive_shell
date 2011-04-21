@@ -14,7 +14,7 @@ def blockdiag_index():
     if source:
         kwargs['diagram'] = base64_decode(source)
 
-    body = render_template('index.html', **kwargs)
+    body = render_template('blockdiag.html', **kwargs)
     response = make_response(body)
     response.headers['Content-Type'] = 'application/xhtml+xml'
     return response
