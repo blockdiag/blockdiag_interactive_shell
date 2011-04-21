@@ -34,3 +34,22 @@ h2 {
     margin-left:	0.0em;
     margin-bottom:	0.2em;
 }
+
+.float-left {
+    float:		left;
+    text-align:		left;
+}
+
+.float-right {
+    float:		right;
+    text-align:		right;
+}
+
+.clearFix:after{  
+    display:		block;  
+    clear:		both;  
+    height:		0;  
+    visibility:		hidden;  
+    content:		".";  
+    zoom:		1;  
+}  
