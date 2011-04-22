@@ -52,7 +52,7 @@ def seqdiag_image():
 
 
 def seqdiag_generate_image(source):
-    import seqdiag
+    from seqdiag import diagparser, builder, DiagramDraw
     from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
@@ -60,9 +60,9 @@ def seqdiag_generate_image(source):
         DiagramEdge.clear()
         NodeGroup.clear()
 
-        tree = seqdiag.diagparser.parse(seqdiag.diagparser.tokenize(source))
-        diagram = seqdiag.seqdiag.DiagramTreeBuilder().build(tree)
-        draw = seqdiag.seqdiag.DiagramDraw('SVG', diagram)
+        tree = diagparser.parse(diagparser.tokenize(source))
+        diagram = builder.ScreenNodeBuilder.build(tree)
+        draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
         svg = draw.save('')
     except RuntimeError, e:
