@@ -37,3 +37,6 @@ def setup_noderenderers():
         m = sys.modules[name]
 
         m.setup(m)
+
+    import renderers
+    renderers.setup(renderers)
