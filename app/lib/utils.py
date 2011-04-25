@@ -38,7 +38,7 @@ def setup_noderenderers():
 
         m.setup(m)
 
-    modules = ('square',)
+    modules = ('class', 'square', 'qb')
     for name in modules:
         name = 'blockdiagcontrib.' + name
         __import__(name, fromlist=blockdiagcontrib)
