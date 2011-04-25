@@ -53,7 +53,7 @@ def seqdiag_image():
 
 def seqdiag_generate_image(source):
     from seqdiag import diagparser, builder, DiagramDraw
-    from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
+    from seqdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
         DiagramNode.clear()
