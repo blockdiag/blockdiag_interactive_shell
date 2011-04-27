@@ -8,4 +8,4 @@ dist
 downloads
 eggs
 parts
-src/.*.egg-info
+app/.*.egg-info

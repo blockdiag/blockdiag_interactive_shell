@@ -3,12 +3,10 @@ import os
 import sys
 
 sys.path.insert(0, './distlib.zip')
-sys.path.insert(0, './lib')
 
 import werkzeug
 from flask import Flask, redirect, request, render_template
-from utils import setup_noderenderers
-from google.appengine.ext.webapp.util import run_wsgi_app
+from lib.utils import setup_noderenderers
 
 
 app = Flask(__name__)
@@ -43,6 +41,13 @@ def tasks_delete_uploads():
     return ""
 
 
+def app_factory(global_config, **local_conf):
+    """ wsgi app factory for Paste """
+    setup_noderenderers()
+    return app
+
+
 if __name__ == '__main__':
+    from google.appengine.ext.webapp.util import run_wsgi_app
     setup_noderenderers()
     run_wsgi_app(app)

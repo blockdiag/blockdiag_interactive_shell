@@ -5,6 +5,14 @@ import base64
 import blockdiag
 import blockdiagcontrib
 
+if sys.version_info >= (2, 6):
+    import json
+else:
+    try:
+        from django.utils import simplejson as json
+    except ImportError:
+        import simplejson as json
+
 
 # for supporting base64.js
 def base64_decode(string):
