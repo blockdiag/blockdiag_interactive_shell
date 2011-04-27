@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from utils import base64_decode
+from lib.utils import base64_decode, json
 from flask import Module, redirect, request, make_response, render_template
-from django.utils import simplejson
 
 app = Module(__name__)
 
