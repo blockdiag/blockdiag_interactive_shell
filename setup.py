@@ -7,6 +7,8 @@ install_requires = [
     'actdiag',
     'blockdiag',
     'blockdiagcontrib-square',
+    'blockdiagcontrib-qb',
+    'blockdiagcontrib-class',
     'netdiag',
     'seqdiag',
     'pypng',
