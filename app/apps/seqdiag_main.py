@@ -7,7 +7,8 @@ app = Module(__name__)
 
 @app.route('/')
 def seqdiag_index():
-    kwargs = {}
+    import seqdiag
+    kwargs = {'version': seqdiag.__version__}
 
     source = request.args.get('src')
     if source:

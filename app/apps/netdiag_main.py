@@ -7,7 +7,8 @@ app = Module(__name__)
 
 @app.route('/')
 def netdiag_index():
-    kwargs = {}
+    import netdiag
+    kwargs = {'version': netdiag.__version__}
 
     source = request.args.get('src')
     if source:
