@@ -24,6 +24,9 @@ app.register_module(apps.actdiag_main.app, url_prefix='/actdiag')
 import apps.netdiag_main
 app.register_module(apps.netdiag_main.app, url_prefix='/netdiag')
 
+import apps.nwdiag_main
+app.register_module(apps.nwdiag_main.app, url_prefix='/nwdiag')
+
 import apps.graphviz_main
 app.register_module(apps.graphviz_main.app, url_prefix='/graphviz')
 
