@@ -7,17 +7,13 @@ app = Module(__name__)
 
 @app.route('/')
 def netdiag_index():
-    import netdiag
-    kwargs = {'version': netdiag.__version__}
+    url = '/nwdiag'
 
     source = request.args.get('src')
     if source:
-        kwargs['diagram'] = base64_decode(source)
+        url += "/?src=%s" % source
 
-    body = render_template('netdiag.html', **kwargs)
-    response = make_response(body)
-    response.headers['Content-Type'] = 'application/xhtml+xml'
-    return response
+    return redirect(url)
 
 
 @app.route('/image', methods=['GET', 'POST'])
