@@ -53,18 +53,13 @@ def blockdiag_image():
 
 
 def blockdiag_generate_image(source):
-    import blockdiag
-    from blockdiag import diagparser
+    from blockdiag import diagparser, builder, DiagramDraw
     from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
-        DiagramNode.clear()
-        DiagramEdge.clear()
-        NodeGroup.clear()
-
         tree = diagparser.parse(diagparser.tokenize(source))
-        diagram = blockdiag.blockdiag.ScreenNodeBuilder.build(tree)
-        draw = blockdiag.DiagramDraw.DiagramDraw('SVG', diagram)
+        diagram = builder.ScreenNodeBuilder.build(tree)
+        draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
         svg = draw.save('')
     except Exception, e:
