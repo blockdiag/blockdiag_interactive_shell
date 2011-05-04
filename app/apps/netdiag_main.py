@@ -58,7 +58,7 @@ def netdiag_generate_image(source):
         draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
         svg = draw.save('')
-    except RuntimeError, e:
+    except Exception, e:
         svg = ''
 
     return svg.decode('utf-8')
