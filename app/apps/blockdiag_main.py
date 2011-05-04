@@ -7,7 +7,8 @@ app = Module(__name__)
 
 @app.route('/')
 def blockdiag_index():
-    kwargs = {}
+    import blockdiag
+    kwargs = {'version': blockdiag.__version__}
 
     source = request.args.get('src')
     if source:
