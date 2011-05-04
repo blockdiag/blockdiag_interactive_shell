@@ -3,6 +3,7 @@ import re
 import sys
 import base64
 import blockdiag
+import blockdiag.noderenderer
 import blockdiagcontrib
 
 if sys.version_info >= (2, 6):
