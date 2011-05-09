@@ -4,6 +4,13 @@ from blockdiag.noderenderer import install_renderer
 from blockdiag.utils.XY import XY
 
 
+class NoneShape(NodeShape):
+    def render_label(self, drawer, **kwargs):
+        pass
+
+    def render_shape(self, drawer, format, **kwargs):
+        pass
+
 class Dots(NodeShape):
     def render_label(self, drawer, **kwargs):
         pass
@@ -36,3 +43,4 @@ class Dots(NodeShape):
 
 def setup(self):
     install_renderer('dots', Dots)
+    install_renderer('none', NoneShape)
