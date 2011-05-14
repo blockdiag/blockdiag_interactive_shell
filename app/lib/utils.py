@@ -28,7 +28,7 @@ def base64_decode(string):
 
 
 def setup_noderenderers():
-    modules = ('box', 'roundedbox', 'diamond', 'minidiamond', 'mail',
+    modules = ('box', 'roundedbox', 'diamond', 'minidiamond', 'mail', 'textbox',
                'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
                'actor', 'flowchart.database', 'flowchart.input',
                'flowchart.loopin', 'flowchart.loopout', 'flowchart.terminator')
