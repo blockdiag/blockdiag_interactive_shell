@@ -53,17 +53,12 @@ def actdiag_image():
 
 def actdiag_generate_image(source):
     import actdiag
-    from actdiag import diagparser
-    from actdiag.elements import DiagramNode, DiagramEdge, NodeGroup
+    from actdiag import diagparser, builder, DiagramDraw
 
     try:
-        DiagramNode.clear()
-        DiagramEdge.clear()
-        NodeGroup.clear()
-
         tree = diagparser.parse(diagparser.tokenize(source))
-        diagram = actdiag.actdiag.ScreenNodeBuilder.build(tree)
-        draw = actdiag.DiagramDraw.DiagramDraw('SVG', diagram)
+        diagram = builder.ScreenNodeBuilder.build(tree)
+        draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
         svg = draw.save('')
     except Exception, e:
