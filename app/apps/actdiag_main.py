@@ -7,7 +7,8 @@ app = Module(__name__)
 
 @app.route('/')
 def actdiag_index():
-    kwargs = {}
+    import actdiag
+    kwargs = {'version': actdiag.__version__}
 
     source = request.args.get('src')
     if source:
