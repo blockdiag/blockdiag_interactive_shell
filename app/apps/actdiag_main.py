@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib.utils import base64_decode, json
+from lib.utils import base64_decode, json as simplejson
 from flask import Module, redirect, request, make_response, render_template
 
 app = Module(__name__)
