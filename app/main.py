@@ -3,6 +3,7 @@ import os
 import sys
 
 sys.path.insert(0, './distlib.zip')
+sys.path.insert(0, './lib')
 
 import werkzeug
 from flask import Flask, redirect, request, render_template
