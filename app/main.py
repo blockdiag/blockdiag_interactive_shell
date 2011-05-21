@@ -50,8 +50,11 @@ def app_factory(global_config, **local_conf):
     setup_noderenderers()
     return app
 
-
-if __name__ == '__main__':
+def main():
     from google.appengine.ext.webapp.util import run_wsgi_app
     setup_noderenderers()
     run_wsgi_app(app)
+
+
+if __name__ == '__main__':
+    main()
