@@ -33,6 +33,13 @@ def get_redirect_url(urlbase, request):
     if os.environ['HTTP_HOST'] == 'blockdiag.appspot.com':
         url = 'http://interactive.blockdiag.com/'
 
+    if os.environ['HTTP_HOST'] == 'blockdiag-dev.appspot.com':
+        url = 'http://dev.interactive.blockdiag.com/'
+
+    if url:
+        if urlbase:
+            url += "%s/" % urlbase
+
         if request.args.get('src'):
             url += '?src=%s' % request.args.get('src')
 
