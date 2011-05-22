@@ -8,12 +8,12 @@ import blockdiag.noderenderer
 import blockdiagcontrib
 
 if sys.version_info >= (2, 6):
-    import json
+    import json as simplejson
 else:
     try:
-        from django.utils import simplejson as json
+        from django.utils import simplejson
     except ImportError:
-        import simplejson as json
+        import simplejson
 
 
 # for supporting base64.js
@@ -28,18 +28,15 @@ def base64_decode(string):
     return unicode(base64.b64decode(string), 'UTF-8')
 
 
-def get_redirector(urlbase, request):
-    ret = None
-
+def get_redirect_url(urlbase, request):
+    url = None
     if os.environ['HTTP_HOST'] == 'blockdiag.appspot.com':
         url = 'http://interactive.blockdiag.com/'
 
         if request.args.get('src'):
             url += '?src=%s' % request.args.get('src')
 
-        ret = redirect(url)
-
-    return ret
+    return url
 
 
 def setup_noderenderers():
