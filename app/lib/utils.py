@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import os
 import sys
 import base64
 import blockdiag
@@ -25,6 +26,20 @@ def base64_decode(string):
         string += "=" * (4 - padding)
 
     return unicode(base64.b64decode(string), 'UTF-8')
+
+
+def get_redirector(urlbase, request):
+    ret = None
+
+    if os.environ['HTTP_HOST'] == 'blockdiag.appspot.com':
+        url = 'http://interactive.blockdiag.com/'
+
+        if request.args.get('src'):
+            url += '?src=%s' % request.args.get('src')
+
+        ret = redirect(url)
+
+    return ret
 
 
 def setup_noderenderers():

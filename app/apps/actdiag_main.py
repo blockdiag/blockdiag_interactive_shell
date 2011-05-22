@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib.utils import base64_decode, json as simplejson
+from lib.utils import base64_decode, get_redirector, json as simplejson
 from flask import Module, redirect, request, make_response, render_template
 
 app = Module(__name__)
@@ -9,6 +9,10 @@ app = Module(__name__)
 def actdiag_index():
     import actdiag
     kwargs = {'version': actdiag.__version__}
+
+    redirector = get_redirector('actdiag', request)
+    if redirector:
+        return redirector
 
     source = request.args.get('src')
     if source:
