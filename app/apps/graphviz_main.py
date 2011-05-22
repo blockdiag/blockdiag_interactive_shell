@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib.utils import base64_decode, get_redirector, json as simplejson
+from lib.utils import base64_decode, get_redirect_url, simplejson
 from flask import Module, redirect, request, make_response, render_template
 
 app = Module(__name__)
@@ -9,9 +9,9 @@ app = Module(__name__)
 def graphviz_index():
     kwargs = {}
 
-    redirector = get_redirector('graphviz', request)
-    if redirector:
-        return redirector
+    url = get_redirect_url('graphviz', request)
+    if url:
+        return redirect(url)
 
     source = request.args.get('src')
     if source:
