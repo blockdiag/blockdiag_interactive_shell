@@ -1,0 +1,9 @@
+{
+  node_width = 6;
+  node_height = 6;
+  span_width = 5;
+  span_height = 5;
+
+  A -- B -- C, D;
+  A -- E -- F;
+}
