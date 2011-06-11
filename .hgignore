@@ -3,6 +3,7 @@
 .swp
 bin
 _build
+_devel/
 develop-eggs
 dist
 downloads
