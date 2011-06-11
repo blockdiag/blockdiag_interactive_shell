@@ -68,3 +68,6 @@ def setup_noderenderers():
 
     import renderers
     renderers.setup(renderers)
+
+    import cisco
+    cisco.setup(cisco)
