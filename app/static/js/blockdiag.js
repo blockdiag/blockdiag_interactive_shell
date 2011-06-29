@@ -15,7 +15,7 @@ function update_diagram() {
   $.post(url, params, function(data, status){
     if (status == 'success' && data != "") {
       re = RegExp('viewBox="\\d+\\s+\\d+\\s+(\\d+)\\s+(\\d+)\\s*"');
-      m = re(data)
+      m = data.match(re);
       if (m) {
         width = m[1]
         height = m[2]
