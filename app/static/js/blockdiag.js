@@ -11,38 +11,43 @@ function update_diagram() {
   $('#shorten_url a').attr('href', url)
 
   url = './image';
-  params = {'src': diagram};
-  $.post(url, params, function(data, status){
-    if (status == 'success' && data != "") {
-      re = RegExp('viewBox="\\d+\\s+\\d+\\s+(\\d+)\\s+(\\d+)\\s*"');
-      m = data.match(re);
-      if (m) {
-        width = m[1]
-        height = m[2]
-      } else {
-        width = 400
-        height = 400
-      }
+  params = {'encoding': 'jsonp', 'src': diagram};
+  $.ajax({
+    url: url,
+    dataType: "jsonp",
+    data: params,
+    success: function(json) {
+      if (json['image'] != "") {
+        re = RegExp('viewBox="\\d+\\s+\\d+\\s+(\\d+)\\s+(\\d+)\\s*"');
+        m = json['image'].match(re);
+        if (m) {
+          width = m[1]
+          height = m[2]
+        } else {
+          width = 400
+          height = 400
+        }
 
-      if(jQuery.support.checkOn && jQuery.support.noCloneEvent && !window.globalStorage){
-        encoded_diagram = Base64.encodeURI(diagram)
-        url = './image?encoding=base64&src=' + encoded_diagram
-        var obj = $(document.createElement('object'))
-        obj.attr('type', 'image/svg+xml')
-        obj.attr('data', url)
-        obj.attr('width', width)
-        obj.attr('height', height)
-        $('#diagram_image').html(obj);
-      } else {
-        html = data.replace(/<\?xml.*>\n/, '')
-        html = html.replace(/<!DOCTYPE.*>\n/, '')
+        if (jQuery.support.checkOn && jQuery.support.noCloneEvent && !window.globalStorage){
+          encoded_diagram = Base64.encodeURI(diagram)
+          url = './image?encoding=base64&src=' + encoded_diagram
+          var obj = $(document.createElement('object'))
+          obj.attr('type', 'image/svg+xml')
+          obj.attr('data', url)
+          obj.attr('width', width)
+          obj.attr('height', height)
+          $('#diagram_image').html(obj);
+        } else {
+          html = json['image'].replace(/<\?xml.*>\n/, '')
+          html = html.replace(/<!DOCTYPE.*>\n/, '')
 
-        $('#diagram_image').html(html);
-        if (!$.support.checkOn) {
-          // for Chrome and Safari
-          $('#diagram_image svg').removeAttr('viewBox');
-          $('#diagram_image svg').attr('width', width);
-          $('#diagram_image svg').attr('height', height);
+          $('#diagram_image').html(html);
+          if (!$.support.checkOn) {
+            // for Chrome and Safari
+            $('#diagram_image svg').removeAttr('viewBox');
+            $('#diagram_image svg').attr('width', width);
+            $('#diagram_image svg').attr('height', height);
+          }
         }
       }
     }
