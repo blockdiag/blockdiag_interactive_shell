@@ -36,11 +36,11 @@ def blockdiag_image():
     if encoding == 'base64':
         source = base64_decode(source)
 
-    svg = blockdiag_generate_image(source)
+    image = blockdiag_generate_image(source)
     if encoding == 'jsonp':
         callback = request.args.get('callback')
-        if callback and svg:
-            json = simplejson.dumps({'image': svg}, ensure_ascii=False)
+        if callback:
+            json = simplejson.dumps(image, ensure_ascii=False)
             jsonp = u'%s(%s)' % (callback, json)
         else:
             jsonp = ''
@@ -48,7 +48,7 @@ def blockdiag_image():
         response = make_response(jsonp)
         response.headers['Content-Type'] = 'text/javascript'
     else:
-        response = make_response(svg)
+        response = make_response(image['image'])
         if encoding == 'base64':
             response.headers['Content-Type'] = 'image/svg+xml'
         else:
@@ -66,11 +66,16 @@ def blockdiag_generate_image(source):
         diagram = builder.ScreenNodeBuilder.build(tree)
         draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
-        svg = draw.save('')
+
+        svg = draw.save('').decode('utf-8')
+        etype = None
+        error = None
     except Exception, e:
         svg = ''
+        etype = e.__class__.__name__
+        error = str(e)
 
-    return svg.decode('utf-8')
+    return dict(image=svg, etype=etype, error=error)
 
 
 @app.route('/upload/', methods=['GET', 'POST'])
