@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from lib.utils import base64_decode, get_redirect_url, simplejson
-from flask import Module, redirect, request, make_response, render_template
+from flask import Blueprint, redirect, request, make_response, render_template
 
-app = Module(__name__)
+app = Blueprint('seqdiag_main', __name__)
 
 
 @app.route('/')
