@@ -14,22 +14,22 @@ app = Flask(__name__)
 app.debug = True
 
 import apps.blockdiag_main
-app.register_module(apps.blockdiag_main.app)
+app.register_blueprint(apps.blockdiag_main.app)
 
 import apps.seqdiag_main
-app.register_module(apps.seqdiag_main.app, url_prefix='/seqdiag')
+app.register_blueprint(apps.seqdiag_main.app, url_prefix='/seqdiag')
 
 import apps.actdiag_main
-app.register_module(apps.actdiag_main.app, url_prefix='/actdiag')
+app.register_blueprint(apps.actdiag_main.app, url_prefix='/actdiag')
 
 import apps.netdiag_main
-app.register_module(apps.netdiag_main.app, url_prefix='/netdiag')
+app.register_blueprint(apps.netdiag_main.app, url_prefix='/netdiag')
 
 import apps.nwdiag_main
-app.register_module(apps.nwdiag_main.app, url_prefix='/nwdiag')
+app.register_blueprint(apps.nwdiag_main.app, url_prefix='/nwdiag')
 
 import apps.graphviz_main
-app.register_module(apps.graphviz_main.app, url_prefix='/graphviz')
+app.register_blueprint(apps.graphviz_main.app, url_prefix='/graphviz')
 
 
 @app.route('/tasks/delete_uploads')
