@@ -61,7 +61,7 @@ def nwdiag_generate_image(source):
     from nwdiag import diagparser, builder, DiagramDraw
 
     try:
-        tree = diagparser.parse(source)
+        tree = diagparser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
         draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
