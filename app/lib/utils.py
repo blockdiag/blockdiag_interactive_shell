@@ -28,6 +28,15 @@ def base64_decode(string):
     return unicode(base64.b64decode(string), 'UTF-8')
 
 
+def get_hostname():
+    if os.environ.get('HTTP_HOST'):
+        hostname = os.environ['HTTP_HOST']
+    else:
+        hostname = os.environ['SERVER_NAME']
+
+    return hostname
+
+
 def get_redirect_url(urlbase, request):
     url = None
     if os.environ['HTTP_HOST'] == 'blockdiag.appspot.com':
@@ -70,4 +79,4 @@ def setup_noderenderers():
     renderers.setup(renderers)
 
     import cisco
-    cisco.setup(cisco)
+    cisco.setup(cisco, 'http://%s/static/cisco_images' % get_hostname())
