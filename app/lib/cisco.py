@@ -25,7 +25,12 @@ except ImportError:
     from blockdiag.utils.TextFolder import TextFolder
 
 
-def gen_image_class(image_path):
+def gen_image_class(image_path, baseurl=None):
+    if baseurl:
+        image_url = "%s/%s" % (baseurl, os.path.basename(image_path))
+    else:
+        image_url = image_path
+
     class CiscoImage(NodeShape):
         def __init__(self, node, metrix=None):
             super(CiscoImage, self).__init__(node, metrix)
@@ -76,11 +81,10 @@ def gen_image_class(image_path):
 
         def render_shape(self, drawer, format, **kwargs):
             if not kwargs.get('shadow'):
-                drawer.loadImage(self.image_path, self.image_box)
+                drawer.loadImage(image_url, self.image_box)
 
     return CiscoImage
 
-# -*- coding: utf-8 -*-
 
 class StreamReader(object):
     def __init__(self, stream):
@@ -95,16 +99,17 @@ class StreamReader(object):
     def read_word(self):
         byte1, byte2 = self.stream[self.pos:self.pos + 2]
         self.pos += 2
-        return (ord(byte1)<<8) + ord(byte2)
+        return (ord(byte1) << 8) + ord(byte2)
 
     def read_bytes(self, n):
         bytes = self.stream[self.pos:self.pos + n]
         self.pos += n
         return bytes
 
+
 class JpegHeaderReader(StreamReader):
-    M_SOI   = 0xd8
-    M_SOS   = 0xda
+    M_SOI = 0xd8
+    M_SOS = 0xda
 
     def read_marker(self):
         if self.read_byte() != 255:
@@ -117,27 +122,27 @@ class JpegHeaderReader(StreamReader):
         self.read_bytes(length - 2)
 
     def __iter__(self):
-      while True:
-          if self.read_byte() != 255:
-              raise ValueError("error reading marker")
+        while True:
+            if self.read_byte() != 255:
+                raise ValueError("error reading marker")
 
-          marker = self.read_byte()
-          if marker == self.M_SOI:
-              length = 0
-              data = ''
-          else:
-              length = self.read_word()
-              data = self.read_bytes(length - 2)
+            marker = self.read_byte()
+            if marker == self.M_SOI:
+                length = 0
+                data = ''
+            else:
+                length = self.read_word()
+                data = self.read_bytes(length - 2)
 
-          yield (marker, data)
+            yield (marker, data)
 
-          if marker == self.M_SOS:
-              raise StopIteration()
+            if marker == self.M_SOS:
+                raise StopIteration()
 
 
 class JpegFile(object):
-    M_SOF0  = 0xc0
-    M_SOF1  = 0xc1
+    M_SOF0 = 0xc0
+    M_SOF1 = 0xc1
 
     @classmethod
     def get_size(self, filename):
@@ -147,9 +152,10 @@ class JpegFile(object):
             if header[0] in (self.M_SOF0, self.M_SOF1):
                 data = header[1]
 
-                height = (ord(data[1])<<8) + ord(data[2])
-                width = (ord(data[3])<<8) + ord(data[4])
+                height = (ord(data[1]) << 8) + ord(data[2])
+                width = (ord(data[3]) << 8) + ord(data[4])
                 return (width, height)
+
 
 def to_classname(filename):
     filename = re.sub('\.[a-z]+$', '', filename)
@@ -157,11 +163,12 @@ def to_classname(filename):
 
     return "cisco.%s" % filename
 
-def setup(self):
+
+def setup(self, baseurl=None):
     path = "%s/images/cisco" % os.path.dirname(__file__)
     dir = os.listdir(path)
     for filename in dir:
-        klass = gen_image_class("%s/%s" % (path, filename))
+        klass = gen_image_class("%s/%s" % (path, filename), baseurl)
         klassname = to_classname(filename)
 
         install_renderer(klassname, klass)
