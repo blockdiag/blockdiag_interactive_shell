@@ -58,14 +58,9 @@ def seqdiag_image():
 
 def seqdiag_generate_image(source):
     from seqdiag import diagparser, builder, DiagramDraw
-    from seqdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
-        DiagramNode.clear()
-        DiagramEdge.clear()
-        NodeGroup.clear()
-
-        tree = diagparser.parse(diagparser.tokenize(source))
+        tree = diagparser.parse(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
         draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
