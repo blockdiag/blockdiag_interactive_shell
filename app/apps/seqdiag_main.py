@@ -60,7 +60,7 @@ def seqdiag_generate_image(source):
     from seqdiag import diagparser, builder, DiagramDraw
 
     try:
-        tree = diagparser.parse(source)
+        tree = diagparser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
         draw = DiagramDraw.DiagramDraw('SVG', diagram)
         draw.draw()
