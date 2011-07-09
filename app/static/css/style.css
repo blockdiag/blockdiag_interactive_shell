@@ -35,6 +35,13 @@ h2 {
     margin-bottom:	0.2em;
 }
 
+#error_msg {
+    display:		none;
+    font-weight:	bold;
+    color:		#ffffff;
+    background-color:	#ff0000;
+}
+
 .float-left {
     float:		left;
     text-align:		left;

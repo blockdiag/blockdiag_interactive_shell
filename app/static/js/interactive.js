@@ -17,7 +17,13 @@ function update_diagram() {
     dataType: "jsonp",
     data: params,
     success: function(json) {
-      if (json['image'] != "") {
+      if (json['etype']) {
+        msg = "ERROR: " + json['error'] + '(' + json['etype'] + ')';
+        $('#error_msg').text(msg);
+        $('#error_msg').show();
+      } else if (json['image'] != "") {
+        $('#error_msg').hide()
+
         re = RegExp('viewBox="\\d+\\s+\\d+\\s+(\\d+)\\s+(\\d+)\\s*"');
         m = json['image'].match(re);
         if (m) {
