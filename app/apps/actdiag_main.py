@@ -35,7 +35,8 @@ def actdiag_image():
     if encoding == 'base64':
         source = base64_decode(source)
 
-    image = actdiag_generate_image(source)
+    format = request.args.get('format', 'SVG')
+    image = actdiag_generate_image(source, format)
     if encoding == 'jsonp':
         callback = request.args.get('callback')
         if callback:
@@ -56,17 +57,17 @@ def actdiag_image():
     return response
 
 
-def actdiag_generate_image(source):
+def actdiag_generate_image(source, format):
     import actdiag
     from actdiag import diagparser, builder, DiagramDraw
 
     try:
         tree = diagparser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw('SVG', diagram)
+        draw = DiagramDraw.DiagramDraw(format, diagram)
         draw.draw()
 
-        svg = draw.save('').decode('utf-8')
+        image = draw.save().decode('utf-8')
         etype = None
         error = None
     except Exception, e:
@@ -74,4 +75,4 @@ def actdiag_generate_image(source):
         etype = e.__class__.__name__
         error = str(e)
 
-    return dict(image=svg, etype=etype, error=error)
+    return dict(image=image, etype=etype, error=error)

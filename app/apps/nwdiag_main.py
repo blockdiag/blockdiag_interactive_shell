@@ -35,7 +35,8 @@ def nwdiag_image():
     if encoding == 'base64':
         source = base64_decode(source)
 
-    image = nwdiag_generate_image(source)
+    format = request.args.get('format', 'SVG')
+    image = nwdiag_generate_image(source, format)
     if encoding == 'jsonp':
         callback = request.args.get('callback')
         if callback:
@@ -56,17 +57,17 @@ def nwdiag_image():
     return response
 
 
-def nwdiag_generate_image(source):
+def nwdiag_generate_image(source, format):
     import nwdiag
     from nwdiag import diagparser, builder, DiagramDraw
 
     try:
         tree = diagparser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw('SVG', diagram)
+        draw = DiagramDraw.DiagramDraw(format, diagram)
         draw.draw()
 
-        svg = draw.save('').decode('utf-8')
+        image = draw.save('').decode('utf-8')
         etype = None
         error = None
     except Exception, e:
@@ -74,4 +75,4 @@ def nwdiag_generate_image(source):
         etype = e.__class__.__name__
         error = str(e)
 
-    return dict(image=svg, etype=etype, error=error)
+    return dict(image=image, etype=etype, error=error)
