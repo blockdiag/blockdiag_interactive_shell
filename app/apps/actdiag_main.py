@@ -73,7 +73,7 @@ def actdiag_generate_image(source, format):
         etype = None
         error = None
     except Exception, e:
-        svg = ''
+        image = ''
         etype = e.__class__.__name__
         error = str(e)
 
