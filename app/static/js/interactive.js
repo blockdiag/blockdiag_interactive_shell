@@ -7,15 +7,15 @@ function update_diagram() {
   __last = diagram;
 
   encoded_diagram = Base64.encodeURI(diagram)
-  url = './?src=' + encoded_diagram
-  if (url.length > 2000) {
+  if (encoded_diagram > 2000) {
     msg = "ERROR: source diagram is too long. Interactive shell does not support large diagram, Try using command-line's."
     $('#error_msg').text(msg);
     $('#error_msg').show();
     return;
   }
 
-  $('#shorten_url a').attr('href', url)
+  $('#shorten_url a').attr('href', './?src=' + encoded_diagram)
+  $('#download_url a').attr('href', './image?encoding=base64&src=' + encoded_diagram)
 
   url = './image';
   params = {'encoding': 'jsonp', 'src': diagram};
