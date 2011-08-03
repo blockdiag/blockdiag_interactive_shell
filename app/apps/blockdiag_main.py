@@ -50,7 +50,9 @@ def blockdiag_image():
         response.headers['Content-Type'] = 'text/javascript'
     else:
         response = make_response(image['image'])
-        if encoding == 'base64':
+        if format == 'PNG':
+            response.headers['Content-Type'] = 'image/png'
+        elif encoding == 'base64':
             response.headers['Content-Type'] = 'image/svg+xml'
         else:
             response.headers['Content-Type'] = 'text/plain'
