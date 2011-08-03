@@ -22,9 +22,6 @@ app.register_blueprint(apps.seqdiag_main.app, url_prefix='/seqdiag')
 import apps.actdiag_main
 app.register_blueprint(apps.actdiag_main.app, url_prefix='/actdiag')
 
-import apps.netdiag_main
-app.register_blueprint(apps.netdiag_main.app, url_prefix='/netdiag')
-
 import apps.nwdiag_main
 app.register_blueprint(apps.nwdiag_main.app, url_prefix='/nwdiag')
 
