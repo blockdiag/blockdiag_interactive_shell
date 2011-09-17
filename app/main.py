@@ -15,6 +15,7 @@ app.debug = True
 
 import apps.blockdiag_main
 app.register_blueprint(apps.blockdiag_main.app)
+app.register_blueprint(apps.blockdiag_main.app, url_prefix='/blockdiag')
 
 import apps.seqdiag_main
 app.register_blueprint(apps.seqdiag_main.app, url_prefix='/seqdiag')
@@ -46,6 +47,7 @@ def app_factory(global_config, **local_conf):
     """ wsgi app factory for Paste """
     setup_noderenderers()
     return app
+
 
 def main():
     from google.appengine.ext.webapp.util import run_wsgi_app
