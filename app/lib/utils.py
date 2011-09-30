@@ -82,4 +82,4 @@ def setup_noderenderers():
     cisco.setup(cisco, 'http://%s/static/cisco_images' % get_hostname())
 
     import nationalflags
-    nationalflags.setup(cisco, 'http://%s/static/flag_images' % get_hostname())
+    nationalflags.setup(nationalflags, 'http://%s/static/flag_images' % get_hostname())
