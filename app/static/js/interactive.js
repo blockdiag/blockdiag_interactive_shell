@@ -1,10 +1,15 @@
 var __last = null;
+var unicode_yensign_pattern = /^((?:[\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})+)([\xa5])/;
 
 function update_diagram() {
   diagram = $('#diagram').val();
   if (diagram == null || diagram.length == 0) return;
   if (__last == diagram) return; 
   __last = diagram;
+
+  while (diagram.match(unicode_yensign_pattern)) {
+    diagram = diagram.replace(unicode_yensign_pattern, "$1\\");
+  }
 
   encoded_diagram = Base64.encodeURI(diagram)
   if (encoded_diagram > 2000) {
