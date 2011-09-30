@@ -1,6 +1,35 @@
 var __last = null;
 var unicode_yensign_pattern = /^((?:[\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})+)([\xa5])/;
 
+
+function basename(path) {
+  return path.replace(/\\/g,'/').replace( /.*\//, '' );
+}
+ 
+function dirname(path) {
+  return path.replace(/\\/g,'/').replace(/\/[^\/]*$/, '');
+}
+
+
+function render_version() {
+  familyname = basename(dirname(document.URL));
+
+  $.ajax({
+    url: '/static/versions.json',
+    dataType: "json",
+    success: function(json) {
+      if (json[familyname]) {
+        version = json[familyname];
+      } else {
+        version = json.blockdiag;
+      }
+
+      $('#version').text(' v' + version);
+    }
+  });
+}
+
+
 function update_diagram() {
   diagram = $('#diagram').val();
   if (diagram == null || diagram.length == 0) return;
@@ -46,7 +75,8 @@ function update_diagram() {
           height = 400
         }
 
-        if (jQuery.support.checkOn && jQuery.support.noCloneEvent && !window.globalStorage){
+        is_webkit = !document.uniqueID && !window.opera && !window.globalStorage && window.localStorage
+        if (!is_webkit && jQuery.support.noCloneEvent && !window.globalStorage){
           encoded_diagram = Base64.encodeURI(diagram)
           url = './image?encoding=base64&src=' + encoded_diagram
           var obj = $(document.createElement('object'))
@@ -60,11 +90,11 @@ function update_diagram() {
           html = html.replace(/<!DOCTYPE.*>\n/, '')
 
           $('#diagram_image').html(html);
-          if (!$.support.checkOn) {
+          if (is_webkit) {
             // for Chrome and Safari
             $('#diagram_image svg').removeAttr('viewBox');
-            $('#diagram_image svg').attr('width', width);
-            $('#diagram_image svg').attr('height', height);
+            $('#diagram_image svg').width(width);
+            $('#diagram_image svg').height(height);
           }
         }
       }
@@ -72,9 +102,24 @@ function update_diagram() {
   });
 }
 
+/* parse arguments */
+var args = [], arg;
+var parsed = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+for(var i = 0; i < parsed.length; i++) { 
+  arg = parsed[i].split('='); 
+  args.push(arg[0]);
+  args[arg[0]] = arg[1];
+}
+
+
 $(document).ready(function($){
   diagram = $('#diagram');
   diagram.timer = null;
+
+  if (args.src) {
+     source = Base64.decode(args.src)
+     diagram.val(source);
+  }
 
   diagram.bind('keyup change', function(){
     if (diagram.timer)  clearTimeout(diagram.timer);
@@ -82,5 +127,6 @@ $(document).ready(function($){
     diagram.timer = setTimeout(update_diagram, 500);
   });
 
+  render_version();
   update_diagram();
 });
