@@ -14,5 +14,13 @@ handlers:
   static_files: static/favicon.ico
   upload: static/favicon.ico
 
+- url: /(\?src=.*)?
+  static_files: static/html/blockdiag.html
+  upload: static/html/blockdiag.html
+
+- url: /(.*)/(\?src=.*)?
+  static_files: static/html/\1.html
+  upload: static/html/(.*).html
+
 - url: .*
   script: main.py
