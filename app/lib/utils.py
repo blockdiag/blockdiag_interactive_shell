@@ -31,14 +31,19 @@ def base64_decode(string):
 def get_hostname():
     if os.environ.get('HTTP_HOST'):
         hostname = os.environ['HTTP_HOST']
-    else:
+    elif os.environ.get('SERVER_NAME'):
         hostname = os.environ['SERVER_NAME']
+    else:
+        hostname = None
 
     return hostname
 
 
 def get_redirect_url(urlbase, request):
     url = None
+    if 'HTTP_HOST' not in os.environ:
+        return None
+
     if os.environ['HTTP_HOST'] == 'blockdiag.appspot.com':
         url = 'http://interactive.blockdiag.com/'
 
