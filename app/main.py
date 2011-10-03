@@ -2,6 +2,13 @@
 import os
 import sys
 
+# load fake_setuptools (at appengine env)
+try:
+    from google.appengine.ext.webapp.util import run_wsgi_app
+    sys.path.insert(0, './lib/fake_setuptools')
+except:
+    pass
+
 sys.path.insert(0, './distlib.zip')
 sys.path.insert(0, './lib')
 
