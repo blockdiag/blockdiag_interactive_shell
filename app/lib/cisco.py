@@ -17,8 +17,7 @@ import re
 import os
 from blockdiag.noderenderer import NodeShape
 from blockdiag.noderenderer import install_renderer
-from blockdiag.utils.XY import XY
-from blockdiag.utils import images
+from blockdiag.utils import images, XY
 
 try:
     from blockdiag.utils.PILTextFolder import PILTextFolder as TextFolder
@@ -56,7 +55,7 @@ def gen_image_class(image_path, baseurl=None):
                                 halign=self.textalign,
                                 font=self.metrics.font,
                                 fontsize=self.metrics.fontsize)
-            textbox = folder.outlineBox()
+            textbox = folder.outlinebox
 
             self.connectors[0] = XY(pt.x, self.image_box[1])
             self.connectors[1] = XY(textbox[2] + self.metrics.node_padding, pt.y)
