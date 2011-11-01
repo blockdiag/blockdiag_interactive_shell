@@ -62,8 +62,8 @@ def get_redirect_url(urlbase, request):
 
 def setup_noderenderers():
     modules = ('box', 'roundedbox', 'diamond', 'minidiamond', 'mail', 'textbox',
-               'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
-               'actor', 'flowchart.database', 'flowchart.input',
+               'none', 'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
+               'dots', 'actor', 'flowchart.database', 'flowchart.input',
                'flowchart.loopin', 'flowchart.loopout', 'flowchart.terminator')
     for name in modules:
         name = 'blockdiag.noderenderer.' + name
@@ -79,9 +79,6 @@ def setup_noderenderers():
         m = sys.modules[name]
 
         m.setup(m)
-
-    import renderers
-    renderers.setup(renderers)
 
     import cisco
     cisco.setup(cisco, 'http://%s/static/cisco_images' % get_hostname())
