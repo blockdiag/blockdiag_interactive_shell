@@ -27,9 +27,24 @@ function update_diagram() {
   });
 }
 
+/* parse arguments */
+var args = [], arg;
+var parsed = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+for(var i = 0; i < parsed.length; i++) { 
+  arg = parsed[i].split('='); 
+  args.push(arg[0]);
+  args[arg[0]] = arg[1];
+}
+
+
 $(document).ready(function($){
   diagram = $('#diagram');
   diagram.timer = null;
+
+  if (args.src) {
+     source = Base64.decode(args.src)
+     diagram.val(source);
+  }
 
   diagram.bind('keyup change', function(){
     if (diagram.timer)  clearTimeout(diagram.timer);

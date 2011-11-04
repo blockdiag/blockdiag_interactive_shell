@@ -5,6 +5,7 @@ import sys
 import base64
 import zlib
 import blockdiag
+import blockdiag.plugins
 import blockdiag.noderenderer
 import blockdiagcontrib
 
@@ -40,14 +41,19 @@ def decode_source(source, encoding, compression):
 def get_hostname():
     if os.environ.get('HTTP_HOST'):
         hostname = os.environ['HTTP_HOST']
-    else:
+    elif os.environ.get('SERVER_NAME'):
         hostname = os.environ['SERVER_NAME']
+    else:
+        hostname = None
 
     return hostname
 
 
 def get_redirect_url(urlbase, request):
     url = None
+    if 'HTTP_HOST' not in os.environ:
+        return None
+
     if os.environ['HTTP_HOST'] == 'blockdiag.appspot.com':
         url = 'http://interactive.blockdiag.com/'
 
@@ -64,10 +70,21 @@ def get_redirect_url(urlbase, request):
     return url
 
 
+def setup_plugins():
+    import pkg_resources
+    modules = ('autoclass',)
+    for name in modules:
+        _name = 'blockdiag.plugins.' + name
+        __import__(_name, fromlist=blockdiag.plugins)
+        m = sys.modules[_name]
+
+        pkg_resources.plugins[name] = m
+
+
 def setup_noderenderers():
     modules = ('box', 'roundedbox', 'diamond', 'minidiamond', 'mail', 'textbox',
-               'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
-               'actor', 'flowchart.database', 'flowchart.input',
+               'none', 'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
+               'dots', 'actor', 'flowchart.database', 'flowchart.input',
                'flowchart.loopin', 'flowchart.loopout', 'flowchart.terminator')
     for name in modules:
         name = 'blockdiag.noderenderer.' + name
@@ -83,9 +100,6 @@ def setup_noderenderers():
         m = sys.modules[name]
 
         m.setup(m)
-
-    import renderers
-    renderers.setup(renderers)
 
     import cisco
     cisco.setup(cisco, 'http://%s/static/cisco_images' % get_hostname())
