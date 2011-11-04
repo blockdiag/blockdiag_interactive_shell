@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib.utils import base64_decode, get_redirect_url, simplejson
+from lib.utils import decode_source, get_redirect_url, simplejson
 from flask import Blueprint, redirect, request, make_response, render_template
 
 app = Blueprint('graphviz_main', __name__)
@@ -15,7 +15,8 @@ def graphviz_index():
 
     source = request.args.get('src')
     if source:
-        kwargs['diagram'] = base64_decode(source)
+        compression = request.args.get('compression')
+        kwargs['diagram'] = decode_source(source, 'base64', compression)
 
     body = render_template('graphviz.html', **kwargs)
     response = make_response(body)
