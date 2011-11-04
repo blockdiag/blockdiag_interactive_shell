@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib.utils import base64_decode, get_redirect_url, simplejson
+from lib.utils import decode_source, get_redirect_url, simplejson
 from flask import Blueprint, redirect, request, make_response, render_template
 
 app = Blueprint('blockdiag_main', __name__)
@@ -16,7 +16,8 @@ def blockdiag_index():
 
     source = request.args.get('src')
     if source:
-        kwargs['diagram'] = base64_decode(source)
+        compression = request.args.get('compression')
+        kwargs['diagram'] = decode_source(source, 'base64', compression)
 
     body = render_template('blockdiag.html', **kwargs)
     response = make_response(body)
@@ -31,10 +32,11 @@ def blockdiag_image():
         source = request.form['src']
     else:
         source = request.args.get('src')
-    encoding = request.args.get('encoding')
 
-    if encoding == 'base64':
-        source = base64_decode(source)
+    encoding = request.args.get('encoding')
+    compression = request.args.get('compression')
+
+    source = decode_source(source, encoding, compression)
 
     format = request.args.get('format', 'SVG')
     image = blockdiag_generate_image(source, format)
