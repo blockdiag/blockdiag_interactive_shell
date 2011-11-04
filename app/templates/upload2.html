@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/base64.js"></script>
+    <script type="text/javascript" src="/static/js/interactive.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <title>blockdiag diagram generator</title>
+  </head>
+  <body>
+    <h1><a href="http://blockdiag.com/blockdiag/build/html/index.html">blockdiag</a> image generator (for non IE browers)</h1>
+    <h2>Source:</h2>
+    <textarea id="diagram" cols="120" rows="10" readonly="readonly" style="font-size: 14pt; font-family: monospace;">{% if diagram %}{{ diagram|escape }}{% else %}{
+  A -> B -> C;
+       B -> D;
+}{% endif %}</textarea><br />
+    <h2>Diagram:</h2>
+    <div id="diagram_image"></div>
+    <hr />
+    <div class="clearFix">
+      <div class="float-left">
+        blockdiag series: 
+        <a href="/">blockdiag</a> /
+        <a href="/seqdiag">seqdiag</a> /
+        <a href="/actdiag">actdiag</a> /
+        <a href="/nwdiag">nwdiag</a> /
+        <a href="/graphviz">graphviz</a>
+      </div>
+      <div class="float-right">This page is made by <a href="http://twitter.com/#!/tk0miya">@tkomiya</a></div>
+    </div>
+  </body>
+</html>

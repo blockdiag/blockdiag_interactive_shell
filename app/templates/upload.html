@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <title>blockdiag diagram generator</title>
+  </head>
+  <body>
+    <h1><a href="http://blockdiag.com/blockdiag/build/html/index.html">blockdiag</a> image generator (for non IE browers)</h1>
+    <h2>Source:</h2>
+    <form action="/upload/" enctype="multipart/form-data" method="post">
+      <div><label>PNG Icon file (smaller than 32x32)</label><input type="file" name="img" /></div>
+      <div><input type="submit" value="Send image" /></div>
+    </form>
+    <hr />
+    <b>Notice</b>: Uploaded icon will be keep 7 days at our server
+    <hr />
+    <div class="clearFix">
+      <div class="float-left">
+        blockdiag series: 
+        <a href="/">blockdiag</a> /
+        <a href="/seqdiag">seqdiag</a> /
+        <a href="/actdiag">actdiag</a> /
+        <a href="/nwdiag">nwdiag</a> /
+        <a href="/graphviz">graphviz</a>
+      </div>
+      <div class="float-right">This page is made by <a href="http://twitter.com/#!/tk0miya">@tkomiya</a></div>
+    </div>
+  </body>
+</html>
