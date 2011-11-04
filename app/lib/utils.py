@@ -27,7 +27,7 @@ def base64_decode(string):
     if padding > 0:
         string += "=" * (4 - padding)
 
-    return unicode(base64.b64decode(string), 'UTF-8')
+    return base64.b64decode(string)
 
 def decode_source(source, encoding, compression):
     if encoding == 'base64':
@@ -35,6 +35,9 @@ def decode_source(source, encoding, compression):
 
     if compression == 'zip':
         source = zlib.decompress(source)
+
+    if isinstance(source, str):
+        source = unicode(source, 'UTF-8')
 
     return source
 

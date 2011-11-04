@@ -29,6 +29,25 @@ function render_version() {
   });
 }
 
+# for the checksum of deflate
+function adler32(str) {
+  for (var base = 65521, lower = 1, upper = 0, index = 0, code;
+       code = str.charCodeAt(index++);
+       upper = (upper + lower) % base)
+    lower = (lower + code) % base;
+
+  var buf = new Array(4);
+  buf[0] = String.fromCharCode(upper >> 8);
+  buf[1] = String.fromCharCode(upper & 0xff);
+  buf[2] = String.fromCharCode(lower >> 8);
+  buf[3] = String.fromCharCode(lower & 0xff);
+  return buf.join('');
+}
+
+function encode_diagram(diagram) {
+  var diagram = Base64.utob(diagram);
+  return Base64.encodeURI('\x78\x9c' + RawDeflate.deflate(diagram) + adler32(diagram));
+}
 
 function update_diagram() {
   diagram = $('#diagram').val();
@@ -40,7 +59,7 @@ function update_diagram() {
     diagram = diagram.replace(unicode_yensign_pattern, "$1\\");
   }
 
-  encoded_diagram = Base64.encodeURI(RawDeflate.deflate(diagram))
+  encoded_diagram = encode_diagram(diagram);
   if (encoded_diagram > 2000) {
     msg = "ERROR: source diagram is too long. Interactive shell does not support large diagram, Try using command-line's."
     $('#error_msg').text(msg);
@@ -117,10 +136,15 @@ $(document).ready(function($){
 
   source = args.src;
   if (source) {
-    if (args.compression == 'zip') 
-      source = RawDeflate.inflate(source);
-
     source = Base64.decode(source)
+
+    if (args.compression == 'zip') {
+      source = Base64.utob(source);
+      # ignore the header and the checksum
+      source = source.substring(2, source.length - 6);
+      source = RawDeflate.inflate(Base64.utob(source));
+    }
+
     diagram.val(source);
   }
 
