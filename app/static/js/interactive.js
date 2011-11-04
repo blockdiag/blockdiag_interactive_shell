@@ -29,7 +29,6 @@ function render_version() {
   });
 }
 
-# for the checksum of deflate
 function adler32(str) {
   for (var base = 65521, lower = 1, upper = 0, index = 0, code;
        code = str.charCodeAt(index++);
@@ -67,8 +66,8 @@ function update_diagram() {
     return;
   }
 
-  $('#shorten_url a').attr('href', './?compression=zip&src=' + encoded_diagram)
-  $('#download_url a').attr('href', './image?compression=zip&encoding=base64&src=' + encoded_diagram)
+  $('#shorten_url a').attr('href', './?compression=deflate&src=' + encoded_diagram)
+  $('#download_url a').attr('href', './image?compression=deflate&encoding=base64&src=' + encoded_diagram)
 
   url = './image';
   params = {'encoding': 'jsonp', 'src': diagram};
@@ -96,7 +95,7 @@ function update_diagram() {
 
         is_webkit = !document.uniqueID && !window.opera && !window.globalStorage && window.localStorage
         if (!is_webkit && jQuery.support.noCloneEvent && !window.globalStorage){
-          url = './image?compression=zip&encoding=base64&src=' + encoded_diagram
+          url = './image?compression=deflate&encoding=base64&src=' + encoded_diagram
           var obj = $(document.createElement('object'))
           obj.attr('type', 'image/svg+xml')
           obj.attr('data', url)
@@ -138,9 +137,9 @@ $(document).ready(function($){
   if (source) {
     source = Base64.decode(source)
 
-    if (args.compression == 'zip') {
+    if (args.compression == 'deflate') {
       source = Base64.utob(source);
-      # ignore the header and the checksum
+      // ignore the header and the checksum
       source = source.substring(2, source.length - 6);
       source = RawDeflate.inflate(Base64.utob(source));
     }
