@@ -40,7 +40,7 @@ function update_diagram() {
     diagram = diagram.replace(unicode_yensign_pattern, "$1\\");
   }
 
-  encoded_diagram = Base64.encodeURI(diagram)
+  encoded_diagram = Base64.encodeURI(zip_deflate(diagram))
   if (encoded_diagram > 2000) {
     msg = "ERROR: source diagram is too long. Interactive shell does not support large diagram, Try using command-line's."
     $('#error_msg').text(msg);
@@ -48,8 +48,8 @@ function update_diagram() {
     return;
   }
 
-  $('#shorten_url a').attr('href', './?src=' + encoded_diagram)
-  $('#download_url a').attr('href', './image?encoding=base64&src=' + encoded_diagram)
+  $('#shorten_url a').attr('href', './?compression=zip&src=' + encoded_diagram)
+  $('#download_url a').attr('href', './image?compression=zip&encoding=base64&src=' + encoded_diagram)
 
   url = './image';
   params = {'encoding': 'jsonp', 'src': diagram};
@@ -77,8 +77,7 @@ function update_diagram() {
 
         is_webkit = !document.uniqueID && !window.opera && !window.globalStorage && window.localStorage
         if (!is_webkit && jQuery.support.noCloneEvent && !window.globalStorage){
-          encoded_diagram = Base64.encodeURI(diagram)
-          url = './image?encoding=base64&src=' + encoded_diagram
+          url = './image?compression=zip&encoding=base64&src=' + encoded_diagram
           var obj = $(document.createElement('object'))
           obj.attr('type', 'image/svg+xml')
           obj.attr('data', url)
@@ -116,9 +115,13 @@ $(document).ready(function($){
   diagram = $('#diagram');
   diagram.timer = null;
 
-  if (args.src) {
-     source = Base64.decode(args.src)
-     diagram.val(source);
+  source = args.src;
+  if (source) {
+    if (args.compression == 'zip') 
+      source = zip_inflate(source);
+
+    source = Base64.decode(source)
+    diagram.val(source);
   }
 
   diagram.bind('keyup change', function(){
