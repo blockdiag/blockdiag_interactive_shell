@@ -33,7 +33,7 @@ def decode_source(source, encoding, compression):
     if encoding == 'base64':
         source = base64_decode(source)
 
-    if compression == 'zip':
+    if compression == 'deflate':
         source = zlib.decompress(source)
 
     if isinstance(source, str):
