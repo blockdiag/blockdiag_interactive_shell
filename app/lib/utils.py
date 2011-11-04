@@ -3,6 +3,7 @@ import re
 import os
 import sys
 import base64
+import zlib
 import blockdiag
 import blockdiag.noderenderer
 import blockdiagcontrib
@@ -27,6 +28,14 @@ def base64_decode(string):
 
     return unicode(base64.b64decode(string), 'UTF-8')
 
+def decode_source(source, encoding, compression):
+    if encoding == 'base64':
+        source = base64_decode(source)
+
+    if compression == 'zip':
+        source = zlib.decompress(source)
+
+    return source
 
 def get_hostname():
     if os.environ.get('HTTP_HOST'):
