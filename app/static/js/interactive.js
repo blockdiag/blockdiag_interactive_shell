@@ -40,7 +40,7 @@ function update_diagram() {
     diagram = diagram.replace(unicode_yensign_pattern, "$1\\");
   }
 
-  encoded_diagram = Base64.encodeURI(zip_deflate(diagram))
+  encoded_diagram = Base64.encodeURI(RawDeflate.deflate(diagram))
   if (encoded_diagram > 2000) {
     msg = "ERROR: source diagram is too long. Interactive shell does not support large diagram, Try using command-line's."
     $('#error_msg').text(msg);
@@ -118,7 +118,7 @@ $(document).ready(function($){
   source = args.src;
   if (source) {
     if (args.compression == 'zip') 
-      source = zip_inflate(source);
+      source = RawDeflate.inflate(source);
 
     source = Base64.decode(source)
     diagram.val(source);
