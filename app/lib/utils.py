@@ -4,6 +4,7 @@ import os
 import sys
 import base64
 import blockdiag
+import blockdiag.plugins
 import blockdiag.noderenderer
 import blockdiagcontrib
 
@@ -58,6 +59,17 @@ def get_redirect_url(urlbase, request):
             url += '?src=%s' % request.args.get('src')
 
     return url
+
+
+def setup_plugins():
+    import pkg_resources
+    modules = ('autoclass',)
+    for name in modules:
+        _name = 'blockdiag.plugins.' + name
+        __import__(_name, fromlist=blockdiag.plugins)
+        m = sys.modules[_name]
+
+        pkg_resources.plugins[name] = m
 
 
 def setup_noderenderers():

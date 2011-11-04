@@ -14,7 +14,7 @@ sys.path.insert(0, './lib')
 
 import werkzeug
 from flask import Flask, redirect, request, render_template
-from lib.utils import setup_noderenderers
+from lib.utils import setup_plugins, setup_noderenderers
 
 
 app = Flask(__name__)
@@ -52,12 +52,14 @@ def tasks_delete_uploads():
 
 def app_factory(global_config, **local_conf):
     """ wsgi app factory for Paste """
+    setup_plugins()
     setup_noderenderers()
     return app
 
 
 def main():
     from google.appengine.ext.webapp.util import run_wsgi_app
+    setup_plugins()
     setup_noderenderers()
     run_wsgi_app(app)
 
