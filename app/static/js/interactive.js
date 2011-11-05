@@ -140,8 +140,8 @@ $(document).ready(function($){
     if (args.compression == 'deflate') {
       source = Base64.utob(source);
       // ignore the header and the checksum
-      source = source.substring(2, source.length - 6);
-      source = RawDeflate.inflate(Base64.utob(source));
+      source = source.substring(2, source.length - 4);
+      source = RawDeflate.inflate(source);
     }
 
     diagram.val(source);
