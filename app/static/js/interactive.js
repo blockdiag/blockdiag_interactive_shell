@@ -1,4 +1,5 @@
 var __last = null;
+var compression = false;
 var unicode_yensign_pattern = /^((?:[\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})+)([\xa5])/;
 
 
@@ -49,7 +50,12 @@ function adler32(str) {
 
 function encode_diagram(diagram) {
   var diagram = Base64.utob(diagram);
-  return Base64.encodeURI('\x78\x9c' + RawDeflate.deflate(diagram) + adler32(diagram));
+  if (compression) {
+     diagram = Base64.encodeURI('\x78\x9c' + RawDeflate.deflate(diagram) + adler32(diagram));
+  } else {
+     diagram = Base64.encodeURI(diagram);
+  }
+  return diagram;
 }
 
 function update_diagram() {
@@ -70,8 +76,14 @@ function update_diagram() {
     return;
   }
 
-  $('#shorten_url a').attr('href', './?compression=deflate&src=' + encoded_diagram)
-  $('#download_url a').attr('href', './image?compression=deflate&encoding=base64&src=' + encoded_diagram)
+  if (compression) {
+      params = "compression=deflate&";
+  } else {
+      params = "";
+  }
+
+  $('#shorten_url a').attr('href', './?' + params + 'src=' + encoded_diagram)
+  $('#download_url a').attr('href', './image?' + params + 'encoding=base64&src=' + encoded_diagram)
 
   url = './image';
   params = {'encoding': 'jsonp', 'src': diagram};
@@ -99,7 +111,7 @@ function update_diagram() {
 
         is_webkit = !document.uniqueID && !window.opera && !window.globalStorage && window.localStorage
         if (!is_webkit && jQuery.support.noCloneEvent && !window.globalStorage){
-          url = './image?compression=deflate&encoding=base64&src=' + encoded_diagram
+          url = './image?' + params + 'encoding=base64&src=' + encoded_diagram
           var obj = $(document.createElement('object'))
           obj.attr('type', 'image/svg+xml')
           obj.attr('data', url)
