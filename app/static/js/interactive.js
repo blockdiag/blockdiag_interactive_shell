@@ -14,6 +14,10 @@ function dirname(path) {
 function render_version() {
   familyname = basename(dirname(document.URL));
 
+  if (familyname == 'rackdiag') {
+    familyname = 'nwdiag';
+  }
+
   $.ajax({
     url: '/static/versions.json',
     dataType: "json",

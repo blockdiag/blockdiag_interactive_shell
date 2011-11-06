@@ -33,6 +33,9 @@ app.register_blueprint(apps.actdiag_main.app, url_prefix='/actdiag')
 import apps.nwdiag_main
 app.register_blueprint(apps.nwdiag_main.app, url_prefix='/nwdiag')
 
+import apps.rackdiag_main
+app.register_blueprint(apps.rackdiag_main.app, url_prefix='/rackdiag')
+
 import apps.graphviz_main
 app.register_blueprint(apps.graphviz_main.app, url_prefix='/graphviz')
 
