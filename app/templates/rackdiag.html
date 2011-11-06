@@ -12,20 +12,19 @@
     <title>Interactive shell for nwdiag</title>
   </head>
   <body>
-    <h1>Interactive shell for <a href="http://blockdiag.com/nwdiag/build/html/index.html">nwdiag</a> v{{ version }} (for non IE browers)</h1>
+    <h1>Interactive shell for <a href="http://blockdiag.com/nwdiag/build/html/index.html">rackdiag</a> v{{ version }} (for non IE browers)</h1>
     <h2>Source:</h2>
     <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{% if diagram %}{{ diagram|escape }}{% else %}{
-  network dmz {
-    web01;
-    web02;
-    stg01;
-  }
-  network internal {
-    web01;
-    web02;
-    db01;
-    db02;
-  }
+  1: UPS [height = 3];
+  5: Disk Array [height = 2];
+  7: DB Master
+  8: DB Mirror (1)
+  9: DB Mirror (2)
+  11: Web Server (1)
+  12: Web Server (2)
+  13: Web Server (3)
+  14: Web Server (4)
+  15: LoadBalancer
 }{% endif %}</textarea><br />
     <div id="error_msg"></div>
     <p>Share your diagram: <span id="shorten_url"><a href="#">Permanent link for this diagram</a></span> (this console dose not store any information from your input).</p>
