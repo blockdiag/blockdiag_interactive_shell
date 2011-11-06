@@ -142,6 +142,8 @@ $(document).ready(function($){
       // ignore the header and the checksum
       source = source.substring(2, source.length - 4);
       source = RawDeflate.inflate(source);
+
+      source = Base64.btou(source);
     }
 
     diagram.val(source);
