@@ -1,5 +1,5 @@
 var __last = null;
-var compression = false;
+var compression = true;
 var unicode_yensign_pattern = /^((?:[\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})+)([\xa5])/;
 
 
@@ -51,7 +51,7 @@ function adler32(str) {
 function encode_diagram(diagram) {
   var diagram = Base64.utob(diagram);
   if (compression) {
-     diagram = Base64.encodeURI('\x78\x9c' + RawDeflate.deflate(diagram) + adler32(diagram));
+     diagram = Base64.encodeURI('\x78\x9c' + RawDeflate.deflate(diagram) + adler32(diagram), true);
   } else {
      diagram = Base64.encodeURI(diagram);
   }
@@ -151,7 +151,7 @@ $(document).ready(function($){
 
   source = args.src;
   if (source) {
-    source = Base64.decode(source)
+    source = Base64.decode(source, true);
 
     if (args.compression == 'deflate') {
       source = Base64.utob(source);
