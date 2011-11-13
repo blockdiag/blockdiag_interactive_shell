@@ -75,7 +75,7 @@ def get_redirect_url(urlbase, request):
 
 def setup_plugins():
     import pkg_resources
-    modules = ('autoclass',)
+    modules = ('attributes', 'autoclass',)
     for name in modules:
         _name = 'blockdiag.plugins.' + name
         __import__(_name, fromlist=blockdiag.plugins)
