@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lib.utils import decode_source, get_redirect_url, simplejson
+from lib.utils import decode_source, get_redirect_url, get_fontmap, simplejson
 from flask import Blueprint, redirect, request, make_response, render_template
 
 app = Blueprint('nwdiag_main', __name__)
@@ -68,7 +68,7 @@ def nwdiag_generate_image(source, format):
     try:
         tree = diagparser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw(format, diagram)
+        draw = DiagramDraw.DiagramDraw(format, diagram, fontmap=get_fontmap())
         draw.draw()
 
         image = draw.save('').decode('utf-8')

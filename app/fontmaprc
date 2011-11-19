@@ -1,0 +1,25 @@
+[fontmap]
+serif = FILENAME
+serif-bold = FILENAME
+serif-italic = FILENAME
+serif-oblique = FILENAME
+
+sansserif = FILENAME
+sansserif-bold = FILENAME
+sansserif-italic = FILENAME
+sansserif-oblique = FILENAME
+
+monospace = FILENAME
+monospace-bold = FILENAME
+monospace-italic = FILENAME
+monospace-oblique = FILENAME
+
+cursive = FILENAME
+cursive-bold = FILENAME
+cursive-italic = FILENAME
+cursive-oblique = FILENAME
+
+fantasy = FILENAME
+fantasy-bold = FILENAME
+fantasy-italic = FILENAME
+fantasy-oblique = FILENAME
