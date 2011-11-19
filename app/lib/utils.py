@@ -84,6 +84,20 @@ def setup_plugins():
         pkg_resources.plugins[name] = m
 
 
+def get_fontmap():
+    from StringIO import StringIO
+    from blockdiag.utils.fontmap import FontMap
+    from blockdiag.utils.collections import namedtuple
+
+    dummy = re.sub('pyc', 'py', __file__)
+
+    config = open(u"%s/../fontmaprc" % os.path.dirname(dummy)).read()
+    config = re.sub('FILENAME', dummy, config)
+    options = namedtuple('Option', 'font fontmap')(None, StringIO(config))
+    fmap = FontMap(StringIO(config))
+    return fmap
+
+
 def setup_noderenderers():
     modules = ('box', 'roundedbox', 'diamond', 'minidiamond', 'mail', 'textbox',
                'none', 'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
