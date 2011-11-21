@@ -53,8 +53,7 @@ def gen_image_class(image_path, baseurl=None):
 
             folder = TextFolder(self.textbox, node.label,
                                 halign=self.textalign,
-                                font=self.metrics.font,
-                                fontsize=self.metrics.fontsize)
+                                font=self.metrics.font_for(node))
             textbox = folder.outlinebox
 
             self.connectors[0] = XY(pt.x, self.image_box[1])
