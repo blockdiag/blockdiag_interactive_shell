@@ -99,9 +99,10 @@ def get_fontmap():
 
 
 def setup_noderenderers():
-    modules = ('box', 'roundedbox', 'diamond', 'minidiamond', 'mail', 'textbox',
-               'none', 'note', 'cloud', 'ellipse', 'beginpoint', 'endpoint',
-               'dots', 'actor', 'flowchart.database', 'flowchart.input',
+    modules = ('box', 'square', 'roundedbox', 'diamond', 'minidiamond',
+               'mail', 'textbox', 'none', 'note', 'cloud',
+               'circle', 'ellipse', 'beginpoint', 'endpoint', 'dots', 'actor',
+               'flowchart.database', 'flowchart.input',
                'flowchart.loopin', 'flowchart.loopout', 'flowchart.terminator')
     for name in modules:
         name = 'blockdiag.noderenderer.' + name
@@ -110,7 +111,7 @@ def setup_noderenderers():
 
         m.setup(m)
 
-    modules = ('class', 'square', 'qb')
+    modules = ('class', 'qb')
     for name in modules:
         name = 'blockdiagcontrib.' + name
         __import__(name, fromlist=blockdiagcontrib)
