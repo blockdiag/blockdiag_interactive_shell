@@ -63,13 +63,13 @@ def blockdiag_image():
 
 
 def blockdiag_generate_image(source, format):
-    from blockdiag import diagparser, builder, DiagramDraw
+    from blockdiag import parser, builder, drawer
     from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
-        tree = diagparser.parse_string(source)
+        tree = parser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw(format, diagram, fontmap=get_fontmap())
+        draw = drawer.DiagramDraw(format, diagram, fontmap=get_fontmap())
         draw.draw()
 
         image = draw.save().decode('utf-8')
