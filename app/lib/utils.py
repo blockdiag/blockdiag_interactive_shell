@@ -5,9 +5,10 @@ import sys
 import base64
 import zlib
 import blockdiag
-import blockdiag.plugins
 import blockdiag.noderenderer
 import blockdiagcontrib
+import actdiag.plugins
+import blockdiag.plugins
 
 if sys.version_info >= (2, 6):
     import json as simplejson
@@ -69,16 +70,28 @@ def get_redirect_url(urlbase, request):
 
         if request.args.get('src'):
             url += '?src=%s' % request.args.get('src')
+        if request.args.get('compression'):
+            url += '&compression=%s' % request.args.get('compression')
 
     return url
 
 
 def setup_plugins():
+    blockdiag.plugins.node_handlers = []
+
     import pkg_resources
     modules = ('attributes', 'autoclass',)
     for name in modules:
         _name = 'blockdiag.plugins.' + name
         __import__(_name, fromlist=blockdiag.plugins)
+        m = sys.modules[_name]
+
+        pkg_resources.plugins[name] = m
+
+    modules = ('autolane',)
+    for name in modules:
+        _name = 'actdiag.plugins.' + name
+        __import__(_name, fromlist=actdiag.plugins)
         m = sys.modules[_name]
 
         pkg_resources.plugins[name] = m
