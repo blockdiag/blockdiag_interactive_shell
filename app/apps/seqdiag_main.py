@@ -62,15 +62,16 @@ def seqdiag_image():
 
 
 def seqdiag_generate_image(source, format):
-    from seqdiag import diagparser, builder, DiagramDraw
+    import seqdiag
+    from seqdiag import parser, builder, drawer
 
     try:
-        tree = diagparser.parse_string(source)
+        tree = parser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw(format, diagram, fontmap=get_fontmap())
+        draw = drawer.DiagramDraw(format, diagram, fontmap=get_fontmap())
         draw.draw()
 
-        image = draw.save('').decode('utf-8')
+        image = draw.save().decode('utf-8')
         etype = None
         error = None
     except Exception, e:
