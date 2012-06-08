@@ -109,8 +109,8 @@ function update_diagram() {
           height = 400
         }
 
-        is_webkit = !document.uniqueID && !window.opera && !window.globalStorage && window.localStorage
-        if (!is_webkit && jQuery.support.noCloneEvent && !window.globalStorage){
+        is_webkit = !document.uniqueID && !window.opera && !window.sidebar && window.localStorage && typeof window.orientation == "undefined";
+        if (window.opera) {
           url = './image?' + params + 'encoding=base64&src=' + encoded_diagram
           var obj = $(document.createElement('object'))
           obj.attr('type', 'image/svg+xml')
