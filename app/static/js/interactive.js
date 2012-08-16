@@ -15,7 +15,7 @@ function dirname(path) {
 function render_version() {
   familyname = basename(dirname(document.URL));
 
-  if (familyname == 'rackdiag') {
+  if (familyname == 'rackdiag' || familyname == 'packetdiag') {
     familyname = 'nwdiag';
   }
 
