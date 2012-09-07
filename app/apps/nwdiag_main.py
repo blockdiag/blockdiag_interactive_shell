@@ -63,12 +63,12 @@ def nwdiag_image():
 
 def nwdiag_generate_image(source, format):
     import nwdiag
-    from nwdiag import diagparser, builder, DiagramDraw
+    from nwdiag import parser, builder, drawer
 
     try:
-        tree = diagparser.parse_string(source)
+        tree = parser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = DiagramDraw.DiagramDraw(format, diagram, fontmap=get_fontmap())
+        draw = drawer.DiagramDraw(format, diagram, fontmap=get_fontmap())
         draw.draw()
 
         image = draw.save('').decode('utf-8')
