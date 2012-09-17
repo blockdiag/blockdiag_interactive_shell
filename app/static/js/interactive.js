@@ -109,26 +109,16 @@ function update_diagram() {
           height = 400
         }
 
-        is_webkit = !document.uniqueID && !window.opera && !window.sidebar && window.localStorage && typeof window.orientation == "undefined";
-        if (window.opera) {
-          url = './image?' + params + 'encoding=base64&src=' + encoded_diagram
-          var obj = $(document.createElement('object'))
-          obj.attr('type', 'image/svg+xml')
-          obj.attr('data', url)
-          obj.attr('width', width)
-          obj.attr('height', height)
-          $('#diagram_image').html(obj);
-        } else {
-          html = json['image'].replace(/<\?xml.*>\n/, '')
-          html = html.replace(/<!DOCTYPE.*>\n/, '')
+        html = json['image'].replace(/<\?xml.*>\n/, '')
+        html = html.replace(/<!DOCTYPE.*>\n/, '')
+        $('#diagram_image').html(html);
 
-          $('#diagram_image').html(html);
-          if (is_webkit) {
-            // for Chrome and Safari
-            $('#diagram_image svg').removeAttr('viewBox');
-            $('#diagram_image svg').width(width);
-            $('#diagram_image svg').height(height);
-          }
+        is_webkit = !document.uniqueID && !window.opera && !window.sidebar && window.localStorage && typeof window.orientation == "undefined";
+        if (is_webkit) {
+          // for Chrome and Safari
+          $('#diagram_image svg').removeAttr('viewBox');
+          $('#diagram_image svg').width(width);
+          $('#diagram_image svg').height(height);
         }
       }
     }
