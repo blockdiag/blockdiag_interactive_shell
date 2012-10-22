@@ -16,13 +16,8 @@
 import re
 import os
 from blockdiag.noderenderer import install_renderer
-from blockdiag.noderenderer.box import Box
-from blockdiag.utils import images, XY
-
-try:
-    from blockdiag.utils.PILTextFolder import PILTextFolder as TextFolder
-except ImportError:
-    from blockdiag.utils.TextFolder import TextFolder
+from blockdiag.noderenderer.box import Box as BoxShape
+from blockdiag.utils import images, Box, XY
 
 
 def gen_image_class(image_path, baseurl=None):
@@ -31,7 +26,7 @@ def gen_image_class(image_path, baseurl=None):
     else:
         image_url = image_path
 
-    class NationalFlagImage(Box):
+    class NationalFlagImage(BoxShape):
         def __init__(self, node, metrics=None):
             super(NationalFlagImage, self).__init__(node, metrics)
 
@@ -44,20 +39,18 @@ def gen_image_class(image_path, baseurl=None):
             size = images.calc_image_size(size, bounded)
 
             pt = metrics.cell(node).center
-            self.image_box = [pt.x - size[0] / 2, pt.y - size[1] / 2,
-                              pt.x + size[0] / 2, pt.y + size[1] / 2]
+            self.image_box = Box(pt.x - size[0] / 2, pt.y - size[1] / 2,
+                                 pt.x + size[0] / 2, pt.y + size[1] / 2)
 
             width = metrics.node_width / 2 - size[0] / 2 + metrics.cellsize
-            self.textbox = [pt.x + size[0] / 2, pt.y - size[1] / 2,
-                            pt.x + size[0] / 2 + width, pt.y + size[1] / 2]
+            self.textbox = Box(pt.x + size[0] / 2, pt.y - size[1] / 2,
+                               pt.x + size[0] / 2 + width, pt.y + size[1] / 2)
 
-            folder = TextFolder(self.textbox, node.label,
-                                halign=self.textalign,
-                                font=self.metrics.font_for(node))
-            textbox = folder.outlinebox
+            size = self.metrics.textsize(node.label, self.metrics.font_for(None),
+                                         self.textbox.width)
 
             self.connectors[0] = XY(pt.x, self.image_box[1])
-            self.connectors[1] = XY(textbox[2] + self.metrics.node_padding, pt.y)
+            self.connectors[1] = XY(self.image_box.x2 + size.width + self.metrics.node_padding, pt.y)
             self.connectors[2] = XY(pt.x, self.image_box[3])
             self.connectors[3] = XY(self.image_box[0], pt.y)
 
