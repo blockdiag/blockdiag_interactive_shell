@@ -124,7 +124,10 @@ def setup_noderenderers():
 
         m.setup(m)
 
-    modules = ('class', 'qb')
+    import packetdiag.noderenderers
+    packetdiag.noderenderers.setup(packetdiag.noderenderers)
+
+    modules = ('class', 'labeled_box', 'qb')
     for name in modules:
         name = 'blockdiagcontrib.' + name
         __import__(name, fromlist=blockdiagcontrib)
@@ -135,5 +138,5 @@ def setup_noderenderers():
     import cisco
     cisco.setup(cisco, 'http://%s/static/cisco_images' % get_hostname())
 
-    import nationalflags
-    nationalflags.setup(nationalflags, 'http://%s/static/flag_images' % get_hostname())
+    #import nationalflags
+    #nationalflags.setup(nationalflags, 'http://%s/static/flag_images' % get_hostname())
