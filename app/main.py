@@ -14,7 +14,7 @@ sys.path.insert(0, './lib')
 
 import werkzeug
 from flask import Flask, redirect, request, render_template
-from lib.utils import setup_plugins, setup_noderenderers
+from lib.utils import setup_imagedraw, setup_plugins, setup_noderenderers
 
 
 app = Flask(__name__)
@@ -65,6 +65,7 @@ def app_factory(global_config, **local_conf):
 
 def main():
     from google.appengine.ext.webapp.util import run_wsgi_app
+    setup_imagedraw()
     setup_plugins()
     setup_noderenderers()
     run_wsgi_app(app)

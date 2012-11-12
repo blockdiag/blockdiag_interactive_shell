@@ -68,7 +68,8 @@ def packetdiag_generate_image(source, format):
     try:
         tree = parser.parse_string(source)
         diagram = builder.ScreenNodeBuilder.build(tree)
-        draw = drawer.DiagramDraw(format, diagram, fontmap=get_fontmap())
+        draw = drawer.DiagramDraw(format, diagram, fontmap=get_fontmap(),
+                                  ignore_pil=True)
         draw.draw()
 
         image = draw.save('').decode('utf-8')
