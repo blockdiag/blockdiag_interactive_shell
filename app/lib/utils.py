@@ -5,6 +5,7 @@ import sys
 import base64
 import zlib
 import blockdiag
+import blockdiag.imagedraw
 import blockdiag.noderenderer
 import blockdiagcontrib
 import actdiag.plugins
@@ -75,6 +76,13 @@ def get_redirect_url(urlbase, request):
 
     return url
 
+
+def setup_imagedraw():
+    name = 'blockdiag.imagedraw.svg'
+    __import__(name, fromlist=blockdiag.imagedraw)
+    m = sys.modules[name]
+
+    m.setup(m)
 
 def setup_plugins():
     blockdiag.plugins.node_handlers = []
