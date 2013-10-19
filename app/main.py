@@ -63,13 +63,7 @@ def app_factory(global_config, **local_conf):
     return app
 
 
-def main():
-    from google.appengine.ext.webapp.util import run_wsgi_app
-    setup_imagedraw()
-    setup_plugins()
-    setup_noderenderers()
-    run_wsgi_app(app)
-
-
-if __name__ == '__main__':
-    main()
+# initialize
+setup_imagedraw()
+setup_plugins()
+setup_noderenderers()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from blockdiag.utils.collections import namedtuple
+from collections import namedtuple
 
 plugins = {}
 

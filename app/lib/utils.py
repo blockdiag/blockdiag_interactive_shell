@@ -107,8 +107,8 @@ def setup_plugins():
 
 def get_fontmap():
     from StringIO import StringIO
+    from collections import namedtuple
     from blockdiag.utils.fontmap import FontMap
-    from blockdiag.utils.collections import namedtuple
 
     dummy = re.sub('pyc', 'py', __file__)
 
