@@ -73,7 +73,7 @@ def blockdiag_generate_image(source, format):
                                   ignore_pil=True)
         draw.draw()
 
-        image = draw.save().decode('utf-8')
+        image = draw.save()
         etype = None
         error = None
     except Exception, e:
