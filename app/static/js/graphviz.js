@@ -20,7 +20,7 @@ function update_diagram() {
     data: params,
     success: function(json) {
       url = 'https://chart.googleapis.com/chart?cht=gv&amp;chl=' +
-            escape(stripped_diagram);
+            encodeURIComponent(stripped_diagram);
       html = '<img src="' + url + '" />'
       $('#diagram_image').html(html);
     }
