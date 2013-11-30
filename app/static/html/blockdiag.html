@@ -1,43 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<!DOCTYPE html>
+<html lang="ja">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="Content-Script-Type" content="text/javascript" />
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/base64.js"></script>
-    <script type="text/javascript" src="/static/js/rawdeflate.js"></script>
-    <script type="text/javascript" src="/static/js/rawinflate.js"></script>
-    <script type="text/javascript" src="/static/js/interactive.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Interactive shell for blockdiag</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet" />
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
   </head>
+
   <body>
-    <h1>Interactive shell for <a href="http://blockdiag.com/blockdiag/build/html/index.html">blockdiag</a><span id="version"></span> (for non IE browers)</h1>
-    <h2>Source:</h2>
-    <textarea id="diagram" cols="120" rows="10" style="font-size: 14pt; font-family: monospace;">{
-  A -> B -> C;
-       B -> D;
-}</textarea><br />
-    <div id="error_msg"></div>
-    <p>Share your diagram: <span id="shorten_url"><a href="#">Permanent link for this diagram</a></span> (this console dose not store any information from your input).</p>
-    <h2>Diagram:</h2>
-    <div id="diagram_image"></div>
-    <p>Download your diagram: <span id="download_url"><a href="#">Download for this diagram(SVG)</a></span></p>
-    <hr />
-    <div class="clearFix">
-      <div class="float-left">
-        blockdiag series: 
-        <a href="/">blockdiag</a> /
-        <a href="/seqdiag">seqdiag</a> /
-        <a href="/actdiag">actdiag</a> /
-        <a href="/nwdiag">nwdiag</a> /
-        <a href="/rackdiag">rackdiag</a> /
-        <a href="/packetdiag">packetdiag</a> /
-        <a href="/graphviz">graphviz</a>
+
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+
+      <!-- Fixed navbar -->
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <h1 class="navbar-brand">Interactive shell for <a href="http://blockdiag.com/blockdiag/build/html/index.html">blockdiag</a><span id="version"></span> (for non IE browers)</h1>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">blockdiag series<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/">blockdiag</a></li>
+                  <li><a href="/seqdiag">seqdiag</a></li>
+                  <li><a href="/actdiag">actdiag</a></li>
+                  <li><a href="/nwdiag">nwdiag</a></li>
+                  <li><a href="/rackdiag">rackdiag</a></li>
+                  <li><a href="/packetdiag">packetdiag</a></li>
+                  <li><a href="/graphviz">graphviz</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="float-right">This page is made by <a href="http://twitter.com/#!/tk0miya">@tkomiya</a></div>
+
+      <div class="container">
+        <h3>Source:</h3>
+        <textarea id="diagram" class="form-control" rows="10" style="font-size: 14pt; font-family: monospace;">{
+  A -> B -> C;
+  B -> D;
+}</textarea>
+        <p>Share your diagram: <span id="shorten_url"><a href="#">Permanent link for this diagram</a></span> (this console dose not store any information from your input).</p>
+        <h3>Diagram:</h3>
+        <div id="diagram_image"></div>
+        <p>Download your diagram: <span id="download_url"><a href="#">Download for this diagram(SVG)</a></span></p>
+      </div>
     </div>
+
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted credit">This page is made by <a href="http://twitter.com/#!/tk0miya">@tkomiya</a>.</p>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/base64.js"></script>
+    <script src="/static/js/rawdeflate.js"></script>
+    <script src="/static/js/rawinflate.js"></script>
+    <script src="/static/js/interactive.js"></script>
   </body>
 </html>
