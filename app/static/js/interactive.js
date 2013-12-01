@@ -68,8 +68,7 @@ function update_diagram() {
     diagram = diagram.replace(unicode_yensign_pattern, "$1\\");
   }
 
-  encoded_diagram = encode_diagram(diagram);
-  if (encoded_diagram > 2000) {
+  if (Base64.encodeURI(diagram).length > 1400) {  // 1400 is magic number :-p
     msg = "ERROR: source diagram is too long. Interactive shell does not support large diagram, Try using command-line's."
     $('#error_msg').text(msg);
     $('#error_msg').show();
@@ -82,6 +81,7 @@ function update_diagram() {
       params = "";
   }
 
+  encoded_diagram = encode_diagram(diagram);
   $('#shorten_url a').attr('href', './?' + params + 'src=' + encoded_diagram)
   $('#download_url a').attr('href', './image?' + params + 'encoding=base64&src=' + encoded_diagram)
 
@@ -91,6 +91,11 @@ function update_diagram() {
     url: url,
     dataType: "jsonp",
     data: params,
+    error: function(XMLHtpRequest, textStatus, errorThrown) {
+        msg = "ERROR: " + textStatus + '(' + XMLHttpRequest.status + '):' + errorThrown.message;
+        $('#error_msg').text(msg);
+        $('#error_msg').show();
+    },
     success: function(json) {
       if (json['etype']) {
         msg = "ERROR: " + json['error'] + '(' + json['etype'] + ')';
