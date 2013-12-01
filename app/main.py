@@ -40,19 +40,6 @@ import apps.packetdiag_main
 app.register_blueprint(apps.packetdiag_main.app, url_prefix='/packetdiag')
 
 
-@app.route('/tasks/delete_uploads')
-def tasks_delete_uploads():
-    import models
-    from datetime import date, timedelta
-    expire_date = date.today() - timedelta(7)
-
-    query = models.Picture.all().filter('created_at <=', expire_date)
-    for pict in query.fetch(1000):
-         pict.delete()
-
-    return ""
-
-
 def app_factory(global_config, **local_conf):
     """ wsgi app factory for Paste """
     setup_plugins()

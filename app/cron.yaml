@@ -1,4 +1,0 @@
-cron:
-- description: Remove expired upload images
-  url: /tasks/delete_uploads
-  schedule: every 24 hours
