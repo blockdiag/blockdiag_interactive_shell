@@ -1,0 +1,17 @@
+seqdiag {
+  // simple notation
+  browser  -> webserver [label = "GET /index.html"];
+  browser &lt;-- webserver;
+
+  browser  -> webserver [label = "POST /blog/comment"];
+              webserver  -> database [label = "INSERT comment"];
+              webserver &lt;-- database;
+  browser &lt;-- webserver;
+
+  // auto return notation
+  browser => webserver [label = "GET /index.html"];
+
+  browser => webserver [label = "POST /blog/comment"] {
+    webserver => database [label = "INSERT comment"];
+  }
+}

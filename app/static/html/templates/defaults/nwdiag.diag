@@ -1,0 +1,13 @@
+nwdiag {
+  network dmz {
+    web01;
+    web02;
+    stg01;
+  }
+  network internal {
+    web01;
+    web02;
+    db01;
+    db02;
+  }
+}
