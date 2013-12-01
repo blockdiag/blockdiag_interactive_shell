@@ -1,28 +1,8 @@
 # -*- coding: utf-8 -*-
-from lib.utils import decode_source, get_redirect_url, get_fontmap, simplejson
-from flask import Blueprint, redirect, request, make_response, render_template
+from lib.utils import decode_source, get_fontmap, simplejson
+from flask import Blueprint, request, make_response
 
 app = Blueprint('packetdiag_main', __name__)
-
-
-@app.route('/')
-def packetdiag_index():
-    import packetdiag
-    kwargs = {'version': packetdiag.__version__}
-
-    url = get_redirect_url('packetdiag', request)
-    if url:
-        return redirect(url)
-
-    source = request.args.get('src')
-    if source:
-        compression = request.args.get('compression')
-        kwargs['diagram'] = decode_source(source, 'base64', compression)
-
-    body = render_template('packetdiag.html', **kwargs)
-    response = make_response(body)
-    response.headers['Content-Type'] = 'application/xhtml+xml'
-    return response
 
 
 @app.route('/image', methods=['GET', 'POST'])
