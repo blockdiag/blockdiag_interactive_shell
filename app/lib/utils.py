@@ -11,14 +11,6 @@ import blockdiagcontrib
 import actdiag.plugins
 import blockdiag.plugins
 
-if sys.version_info >= (2, 6):
-    import json as simplejson
-else:
-    try:
-        from django.utils import simplejson
-    except ImportError:
-        import simplejson
-
 
 # for supporting base64.js
 def base64_decode(string):
