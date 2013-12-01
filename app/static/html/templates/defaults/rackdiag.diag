@@ -1,0 +1,14 @@
+rackdiag {
+  24U;
+
+  1: UPS [3U, 0.5A, 10kg];
+  5: Disk Array [2U, 0.5A];
+  7: DB Master
+  8: DB Mirror (1)
+  9: DB Mirror (2)
+  11: Web Server (1)
+  11: Web Server (2)
+  12: Web Server (3)
+  12: Web Server (4)
+  14: LoadBalancer
+}
