@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from lib.utils import decode_source, get_fontmap, simplejson
+import json
+from lib.utils import decode_source, get_fontmap
 from flask import Blueprint, request, make_response
 
 app = Blueprint('nwdiag_main', __name__)
@@ -22,8 +23,8 @@ def nwdiag_image():
     if encoding == 'jsonp':
         callback = request.args.get('callback')
         if callback:
-            json = simplejson.dumps(image, ensure_ascii=False)
-            jsonp = u'%s(%s)' % (callback, json)
+            dumped = json.dumps(image, ensure_ascii=False)
+            jsonp = u'%s(%s)' % (callback, dumped)
         else:
             jsonp = ''
 
