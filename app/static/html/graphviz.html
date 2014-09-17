@@ -39,7 +39,7 @@
               <span class="icon-bar"></span>
             </button>
 
-            <h1 class="navbar-brand">Interactive shell for graphviz (for non IE browers)</h1>
+            <h1 class="navbar-brand">Interactive shell for graphviz (deprecated)</h1>
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -52,7 +52,7 @@
                   <li><a href="/nwdiag/">nwdiag</a></li>
                   <li><a href="/rackdiag/">rackdiag</a></li>
                   <li><a href="/packetdiag/">packetdiag</a></li>
-                  <li><a href="/graphviz/">graphviz</a></li>
+                  <li><a href="/graphviz/">graphviz (deprecated)</a></li>
                 </ul>
               </li>
             </ul>
@@ -61,6 +61,11 @@
       </div>
 
       <div class="container">
+        <div class="alert alert-danger">
+          Warning:
+          <a href="https://developers.google.com/chart/image/?hl=ja">Google Chart Tools: Image Charts</a> has been deprecated.
+          This page will stop working well.
+        </div>
         <h3>Source:</h3>
         <textarea id="diagram" class="form-control" rows="10" style="font-size: 14pt; font-family: monospace;">digraph {
   A -> B -> C;
