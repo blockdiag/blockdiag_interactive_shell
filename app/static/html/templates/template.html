@@ -40,7 +40,7 @@
             </button>
 
             {% if name == "graphviz" -%}
-            <h1 class="navbar-brand">Interactive shell for graphviz (for non IE browers)</h1>
+            <h1 class="navbar-brand">Interactive shell for graphviz (deprecated)</h1>
             {%- else -%}
             <h1 class="navbar-brand">Interactive shell for <a href="http://blockdiag.com/{{name}}/build/html/index.html">{{name}}</a><span id="version"></span> (for non IE browers)</h1>
             {%- endif %}
@@ -56,7 +56,7 @@
                   <li><a href="/nwdiag/">nwdiag</a></li>
                   <li><a href="/rackdiag/">rackdiag</a></li>
                   <li><a href="/packetdiag/">packetdiag</a></li>
-                  <li><a href="/graphviz/">graphviz</a></li>
+                  <li><a href="/graphviz/">graphviz (deprecated)</a></li>
                 </ul>
               </li>
             </ul>
@@ -65,6 +65,13 @@
       </div>
 
       <div class="container">
+        {%if name == "graphviz" -%}
+        <div class="alert alert-danger">
+          Warning:
+          <a href="https://developers.google.com/chart/image/?hl=ja">Google Chart Tools: Image Charts</a> has been deprecated.
+          This page will stop working well.
+        </div>
+        {%- endif -%}
         <h3>Source:</h3>
         <textarea id="diagram" class="form-control" rows="10" style="font-size: 14pt; font-family: monospace;">{{source_code}}</textarea>
         <div id="error_msg" class="alert alert-danger" style="display: none"></div>
@@ -101,3 +108,4 @@
     {%- endif %}
   </body>
 </html>
+
