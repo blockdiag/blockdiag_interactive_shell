@@ -71,10 +71,19 @@ def get_redirect_url(urlbase, request):
 
 def setup_imagedraw():
     name = 'blockdiag.imagedraw.svg'
+    import blockdiag.imagedraw
     __import__(name, fromlist=blockdiag.imagedraw)
     m = sys.modules[name]
 
     m.setup(m)
+
+    # disable ImageFont (TrueType rendering)
+    def ttfont_for(_):
+        return None
+
+    import blockdiag.imagedraw.png
+    blockdiag.imagedraw.png.ttfont_for = ttfont_for
+
 
 def setup_plugins():
     blockdiag.plugins.node_handlers = []
