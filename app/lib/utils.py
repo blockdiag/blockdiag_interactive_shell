@@ -105,6 +105,9 @@ def setup_plugins():
 
         pkg_resources.plugins[name] = m
 
+    import octicons
+    pkg_resources.plugins['octicons'] = octicons
+
 
 def get_fontmap():
     from StringIO import StringIO
