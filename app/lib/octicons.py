@@ -15,10 +15,12 @@
 
 import os
 import re
-from PIL import Image, ImageDraw, ImageFont, PILLOW_VERSION
+from PIL import Image, ImageDraw, ImageFont
 from blockdiag import plugins
 from blockdiag.utils import unquote
 from blockdiag.utils.logging import warning
+
+PILLOW_VERSION = "1.1.7"
 
 icons = {
     'alert': u'\uf02d',
