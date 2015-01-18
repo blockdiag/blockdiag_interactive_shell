@@ -2,6 +2,7 @@
 import json
 from lib.utils import decode_source, get_fontmap
 from flask import Blueprint, request, make_response
+from blockdiag.utils.rst.directives import with_blockdiag
 
 app = Blueprint('nwdiag_main', __name__)
 
@@ -42,6 +43,7 @@ def nwdiag_image():
     return response
 
 
+@with_blockdiag
 def nwdiag_generate_image(source, format):
     from nwdiag import parser, builder, drawer
 

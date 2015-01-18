@@ -2,6 +2,7 @@
 import json
 from lib.utils import decode_source, get_fontmap
 from flask import Blueprint, request, make_response
+from blockdiag.utils.rst.directives import with_blockdiag
 
 app = Blueprint('packetdiag_main', __name__)
 
@@ -42,6 +43,7 @@ def packetdiag_image():
     return response
 
 
+@with_blockdiag
 def packetdiag_generate_image(source, format):
     from packetdiag import parser, builder, drawer
 
