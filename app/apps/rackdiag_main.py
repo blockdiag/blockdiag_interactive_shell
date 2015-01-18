@@ -43,7 +43,6 @@ def rackdiag_image():
 
 
 def rackdiag_generate_image(source, format):
-    import rackdiag
     from rackdiag import parser, builder, drawer
 
     try:

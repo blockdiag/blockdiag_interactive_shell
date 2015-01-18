@@ -23,6 +23,7 @@ def base64_decode(string):
 
     return base64.b64decode(string)
 
+
 def decode_source(source, encoding, compression):
     if encoding == 'base64':
         source = base64_decode(source)
@@ -34,6 +35,7 @@ def decode_source(source, encoding, compression):
         source = unicode(source, 'UTF-8')
 
     return source
+
 
 def get_hostname():
     if os.environ.get('HTTP_HOST'):
@@ -111,14 +113,12 @@ def setup_plugins():
 
 def get_fontmap():
     from StringIO import StringIO
-    from collections import namedtuple
     from blockdiag.utils.fontmap import FontMap
 
     dummy = re.sub('pyc', 'py', __file__)
 
     config = open(u"%s/../fontmaprc" % os.path.dirname(dummy)).read()
     config = re.sub('FILENAME', dummy, config)
-    options = namedtuple('Option', 'font fontmap')(None, StringIO(config))
     fmap = FontMap(StringIO(config))
     return fmap
 

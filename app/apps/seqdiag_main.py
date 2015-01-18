@@ -43,7 +43,6 @@ def seqdiag_image():
 
 
 def seqdiag_generate_image(source, format):
-    import seqdiag
     from seqdiag import parser, builder, drawer
 
     try:

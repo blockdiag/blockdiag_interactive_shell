@@ -43,7 +43,6 @@ def packetdiag_image():
 
 
 def packetdiag_generate_image(source, format):
-    import packetdiag
     from packetdiag import parser, builder, drawer
 
     try:

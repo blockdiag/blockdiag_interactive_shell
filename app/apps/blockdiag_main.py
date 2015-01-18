@@ -44,7 +44,6 @@ def blockdiag_image():
 
 def blockdiag_generate_image(source, format):
     from blockdiag import parser, builder, drawer
-    from blockdiag.elements import DiagramNode, DiagramEdge, NodeGroup
 
     try:
         tree = parser.parse_string(source)
