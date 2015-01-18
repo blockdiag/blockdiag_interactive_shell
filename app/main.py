@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
 import sys
 
 # load fake_setuptools (at appengine env)
 try:
-    from google.appengine.ext.webapp.util import run_wsgi_app
     sys.path.insert(0, './lib/fake_setuptools')
 except:
     pass
@@ -12,8 +10,7 @@ except:
 sys.path.insert(0, './distlib.zip')
 sys.path.insert(0, './lib')
 
-import werkzeug
-from flask import Flask, redirect, request, render_template
+from flask import Flask
 from lib.utils import setup_imagedraw, setup_plugins, setup_noderenderers
 
 

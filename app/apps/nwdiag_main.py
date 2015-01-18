@@ -43,7 +43,6 @@ def nwdiag_image():
 
 
 def nwdiag_generate_image(source, format):
-    import nwdiag
     from nwdiag import parser, builder, drawer
 
     try:

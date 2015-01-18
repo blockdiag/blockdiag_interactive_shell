@@ -43,7 +43,6 @@ def actdiag_image():
 
 
 def actdiag_generate_image(source, format):
-    import actdiag
     from actdiag import parser, builder, drawer
 
     try:
