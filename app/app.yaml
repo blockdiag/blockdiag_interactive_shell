@@ -23,12 +23,12 @@ handlers:
   upload: static/robots.txt
 
 - url: /(\?src=.*)?
-  static_files: static/html/blockdiag.html
-  upload: static/html/blockdiag.html
+  static_files: static/blockdiag/index.html
+  upload: static/blockdiag/index.html
 
 - url: /(.*)/(\?src=.*)?
-  static_files: static/html/\1.html
-  upload: static/html/(.*).html
+  static_files: static/\1/index.html
+  upload: static/(.*)/index.html
 
 - url: .*
   script: main.app
