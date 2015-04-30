@@ -11,6 +11,14 @@ function dirname(path) {
   return path.replace(/\\/g,'/').replace(/\/[^\/]*$/, '');
 }
 
+function get_familyname() {
+  familyname = basename(dirname(document.URL));
+  if (familyname == 'localhost:8080' || familyname == 'blockdiag.appspot.com') {
+      familyname = '';
+  }
+  return familyname;
+}
+
 
 function render_version() {
   familyname = basename(dirname(document.URL));
@@ -85,7 +93,7 @@ function update_diagram() {
   $('#shorten_url a').attr('href', './?' + params + 'src=' + encoded_diagram)
   $('#download_url a').attr('href', './image?' + params + 'encoding=base64&src=' + encoded_diagram)
 
-  url = './image';
+  url = 'http://interactive.blockdiag.com/' + get_familyname() + '/image';
   params = {'encoding': 'jsonp', 'src': diagram};
   $.ajax({
     url: url,
