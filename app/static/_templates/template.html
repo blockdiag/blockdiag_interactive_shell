@@ -65,13 +65,12 @@
       </div>
 
       <div class="container">
-        {%if name == "graphviz" -%}
         <div class="alert alert-danger">
           Warning:
-          <a href="https://developers.google.com/chart/image/?hl=ja">Google Chart Tools: Image Charts</a> has been deprecated.
-          This page will stop working well.
+          This page is moved to 
+          <a href="http://interactive.blockdiag.com/">http://interactive.blockdiag.com/</a>.
+          This page will stop working in near future.
         </div>
-        {%- endif -%}
         <h3>Source:</h3>
         <textarea id="diagram" class="form-control" rows="10" style="font-size: 14pt; font-family: monospace;">{{source_code}}</textarea>
         <div id="error_msg" class="alert alert-danger" style="display: none"></div>
