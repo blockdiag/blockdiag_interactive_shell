@@ -68,13 +68,6 @@ function update_diagram() {
     diagram = diagram.replace(unicode_yensign_pattern, "$1\\");
   }
 
-  if (Base64.encodeURI(diagram).length > 1400) {  // 1400 is magic number :-p
-    msg = "ERROR: source diagram is too long. Interactive shell does not support large diagram, Try using command-line's."
-    $('#error_msg').text(msg);
-    $('#error_msg').show();
-    return;
-  }
-
   if (compression) {
       params = "compression=deflate&";
   } else {
@@ -82,12 +75,27 @@ function update_diagram() {
   }
 
   encoded_diagram = encode_diagram(diagram);
-  $('#shorten_url a').attr('href', './?' + params + 'src=' + encoded_diagram)
-  $('#download_url a').attr('href', './image?' + params + 'encoding=base64&src=' + encoded_diagram)
+  $('#shorten_url a').attr('href', './?' + params + 'src=' + encoded_diagram);
+  $('#download_url a').attr('href', './image?' + params + 'encoding=base64&src=' + encoded_diagram);
+
+  if (Base64.encodeURI(diagram).length > 1400) {  // 1400 is magic number :-p
+    $('#shorten_url a').addClass('disabled');
+    $('#download_url a').addClass('disabled');
+    $('#shorten_url a').removeAttr('href');
+    $('#download_url a').removeAttr('href');
+    $('#shorten_url span').show();
+    $('#download_url span').show();
+  } else {
+    $('#shorten_url a').removeClass('disabled');
+    $('#download_url a').removeClass('disabled');
+    $('#shorten_url span').hide();
+    $('#download_url span').hide();
+  }
 
   url = './image';
   params = {'encoding': 'jsonp', 'src': diagram};
   $.ajax({
+    type: 'POST',
     url: url,
     dataType: "jsonp",
     data: params,
