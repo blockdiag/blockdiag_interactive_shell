@@ -75,11 +75,11 @@
         <h3>Source:</h3>
         <textarea id="diagram" class="form-control" rows="10" style="font-size: 14pt; font-family: monospace;">{{source_code}}</textarea>
         <div id="error_msg" class="alert alert-danger" style="display: none"></div>
-        <p>Share your diagram: <span id="shorten_url"><a href="#">Permanent link for this diagram</a></span> (this console does not store any information from your input).</p>
+        <p>Share your diagram: <span id="shorten_url"><a href="#">Permanent link for this diagram</a><span class="alert-danger" style="display: none;">(diagram to long)</span></span> (this console does not store any information from your input).</p>
         <h3>Diagram:</h3>
         <div id="diagram_image"></div>
         {% if name != "graphviz" -%}
-        <p>Download your diagram: <span id="download_url"><a href="#">SVG (Save link as..)</a></span></p>
+        <p>Download your diagram: <span id="download_url"><a href="#">SVG (Save link as..)</a><span class="alert-danger" style="display: none;">(diagram to long)</span></span></p>
         {%- endif %}
       </div>
     </div>

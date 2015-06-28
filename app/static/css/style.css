@@ -52,3 +52,7 @@ h1 {
 h3 {
   margin-top: 10px;
 }
+
+a.disabled {
+  text-decoration: line-through;
+}
