@@ -10,7 +10,7 @@
 
 Author: @tk0miya <i.tkomiya at gmail.com>
 
-## How to use
+## How to run locally (for debugging)
 
 ```
 $ hg clone https://bitbucket.org/blockdiag/blockdiag_interactive_shell
