@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import logging
 from lib.utils import decode_source, get_fontmap
 from flask import Blueprint, request, make_response
 from blockdiag.utils.rst.directives import with_blockdiag
@@ -62,5 +63,6 @@ def blockdiag_generate_image(source, format):
         image = ''
         etype = e.__class__.__name__
         error = str(e)
+        logging.exception(e)
 
     return dict(image=image, etype=etype, error=error)
