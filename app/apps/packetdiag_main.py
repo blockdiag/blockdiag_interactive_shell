@@ -10,12 +10,13 @@ app = Blueprint('packetdiag_main', __name__)
 @app.route('/image', methods=['GET', 'POST'])
 def packetdiag_image():
     if request.method == 'POST':
-        source = request.form['src']
+        source = request.form.get('src')
+        encoding = request.form.get('encoding')
+        compression = request.form.get('compression')
     else:
         source = request.args.get('src')
-
-    encoding = request.args.get('encoding')
-    compression = request.args.get('compression')
+        encoding = request.args.get('encoding')
+        compression = request.args.get('compression')
 
     source = decode_source(source, encoding, compression)
 
