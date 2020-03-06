@@ -13,7 +13,7 @@ Author: @tk0miya <i.tkomiya at gmail.com>
 ## How to run locally (for debugging)
 
 ```
-$ hg clone https://bitbucket.org/blockdiag/blockdiag_interactive_shell
+$ git clone https://github.com/blockdiag/blockdiag_interactive_shell
 $ cd blockdiag_interactive_shell
 $ python bootstrap.py
 $ bin/buildout
