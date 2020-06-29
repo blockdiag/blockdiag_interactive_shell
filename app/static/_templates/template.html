@@ -79,7 +79,10 @@
         <h3>Diagram:</h3>
         <div id="diagram_image"></div>
         {% if name != "graphviz" -%}
-        <p>Download your diagram: <span id="download_url"><a href="#">SVG (Save link as..)</a><span class="alert-danger" style="display: none;">(diagram to long)</span></span></p>
+        <p>Download your diagram:
+          <span id="download_url"><a href="#">SVG</a>, <a id="png_link" href="#">PNG</a> (Save link as..)
+            <span class="alert-danger" style="display: none;">(diagram to long)</span></span>
+        </p>
         {%- endif %}
       </div>
     </div>
