@@ -58,6 +58,30 @@ function encode_diagram(diagram) {
   return diagram;
 }
 
+class SVGtoPNGDataURL {
+  constructor() {
+    this.can = document.createElement('canvas'); // Not shown on page
+    this.ctx = this.can.getContext('2d');
+    this.loader = new Image; // Not shown on page
+  }
+
+  // Generate PNG data URL from SVG and send it to callback function when ready
+  go(mySVG, callback) {
+    var svgAsXML = (new XMLSerializer).serializeToString( mySVG );
+
+    this.loader.width = this.can.width  = mySVG.clientWidth;
+    this.loader.height = this.can.height = mySVG.clientHeight;
+    var self = this;
+    this.loader.onload = function() {
+      self.ctx.drawImage( self.loader, 0, 0, self.loader.width, self.loader.height );
+      callback(self.can.toDataURL());
+    };
+    this.loader.src = 'data:image/svg+xml,' + encodeURIComponent( svgAsXML );
+  }
+};
+
+var pngconverter = new SVGtoPNGDataURL();
+
 function update_diagram() {
   diagram = $('#diagram').val();
   if (diagram == null || diagram.length == 0) return;
@@ -90,8 +114,11 @@ function update_diagram() {
     $('#download_url a').removeClass('disabled');
     $('#shorten_url span').hide();
     $('#download_url span').hide();
+    pngconverter.go($('#diagram_image svg'), callback=function(dataURL) {
+      $('#download_url a#png_link').attr('href', dataURL);
+    });
   }
-
+  
   url = './image';
   params = {'encoding': 'jsonp', 'src': diagram};
   $.ajax({
@@ -137,6 +164,7 @@ function update_diagram() {
     }
   });
 }
+
 
 /* parse arguments */
 var args = [], arg;
